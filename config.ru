@@ -5,7 +5,7 @@ require ::File.expand_path('../bots/eddard', __FILE__)
 
 Thread.abort_on_exception = true
 Thread.new do
-  Bot.run
+  Eddard.run
 end
 
 run Rails.application
