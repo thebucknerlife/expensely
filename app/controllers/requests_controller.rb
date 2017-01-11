@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   def edit
-    @request_props = { name: "Stranger" }
+    @request_props = { items: [] }
   end
 
   def update

@@ -1,32 +1,18 @@
 import React, { PropTypes } from 'react';
+import RequestItem from './RequestItem';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
-    this.state = { name: this.props.name };
+    this.state = { items: this.props.items };
   }
-
-  updateName = (name) => {
-    this.setState({ name });
-  };
 
   render() {
     return (
       <div>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
         <hr />
         <form >
-          <label htmlFor="name">
-            Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
+          { this.props.items.length }
         </form>
       </div>
     );
@@ -34,6 +20,6 @@ export default class Request extends React.Component {
 }
 
 Request.propTypes = {
-  name: PropTypes.string.isRequired,
+  items: PropTypes.array,
 };
 
