@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  resources :requests
+  get '/requests/:id' => 'requests#edit'
+  patch '/requests/:id' => 'requests#edit'
 end

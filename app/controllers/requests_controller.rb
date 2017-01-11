@@ -1,4 +1,4 @@
-class RequestController < ApplicationController
+class RequestsController < ApplicationController
   def edit
     @request_props = { name: "Stranger" }
   end
