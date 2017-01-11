@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :reimbursements
+  resources :requests
 end
