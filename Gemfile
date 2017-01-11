@@ -7,6 +7,8 @@ end
 
 gem "react_on_rails", "~> 6"
 gem 'dotenv-rails', :groups => [:development, :test]
+gem "slack-ruby-bot"
+gem "celluloid-io"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

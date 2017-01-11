@@ -1,6 +1,6 @@
 import ReactOnRails from 'react-on-rails';
-import Reimbursement from '../components/Reimbursement';
+import Request from '../components/Request';
 
 ReactOnRails.register({
-  Reimbursement,
+  Request,
 });

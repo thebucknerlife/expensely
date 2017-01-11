@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default class Reimbursement extends React.Component {
+export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
     this.state = { name: this.props.name };
@@ -33,7 +33,7 @@ export default class Reimbursement extends React.Component {
   }
 }
 
-Reimbursement.propTypes = {
+Request.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
