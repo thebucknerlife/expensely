@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import RequestItem from './RequestItem';
+import RequestItem from '../components/RequestItem';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
