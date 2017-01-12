@@ -3,8 +3,10 @@ import Dropzone from 'react-dropzone';
 
 const FileDropzone = ({ onDrop }) => {
   return (
-    <FileDropzone onDrop={onDrop}>
+    <Dropzone onDrop={onDrop}>
       <div>Drag and drop receipts here for upload. You can also click to see the normal file dialog window.</div>
-    </FileDropzone>
+    </Dropzone>
   )
 }
+
+export default FileDropzone;

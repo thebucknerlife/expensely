@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import update from 'immutability-helper';
 import RequestForm from '../components/RequestForm';
 import FileDropzone from '../components/FileDropzone';
 
@@ -12,10 +13,30 @@ export default class Request extends React.Component {
     };
   }
 
+  onDrop = (files) => {
+    files.forEach((file) => {
+      console.log(file);
+      this.state.request.items.push({
+        name: file.name,
+        preview: file.preview
+      })
+    })
+    this.setState(this.state);
+  }
+
+  updateItem = (newAttrs, index) => {
+    Object.assign(this.state.request.items[index], newAttrs);
+    this.setState(this.state);
+  }
+  
   render() {
     return (
       <div>
-        <RequestForm items={this.state.request.items}/>
+        <FileDropzone onDrop={this.onDrop}/>
+        <RequestForm
+          items={this.state.request.items}
+          updateItem={this.updateItem}  
+        />
       </div>
     );
   }
