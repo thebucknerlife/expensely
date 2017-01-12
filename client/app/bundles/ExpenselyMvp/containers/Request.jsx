@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import RequestForm from '../components/RequestForm';
+import FileDropzone from '../components/FileDropzone';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
