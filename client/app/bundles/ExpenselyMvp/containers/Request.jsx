@@ -1,19 +1,20 @@
 import React, { PropTypes } from 'react';
-import RequestItem from '../components/RequestItem';
+import RequestForm from '../components/RequestForm';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
-    this.state = { items: this.props.items };
+    this.state = {
+      request: {
+        items: [],
+      }
+    };
   }
 
   render() {
     return (
       <div>
-        <hr />
-        <form >
-          { this.props.items.length }
-        </form>
+        <RequestForm items={this.state.request.items}/>
       </div>
     );
   }
