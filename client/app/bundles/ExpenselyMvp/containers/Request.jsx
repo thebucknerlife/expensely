@@ -16,11 +16,15 @@ export default class Request extends React.Component {
   onDrop = (files) => {
     files.forEach((file) => {
       console.log(file);
-      this.state.request.items.push({
+      this.newItem({
         name: file.name,
         preview: file.preview
       })
     })
+  }
+
+  newItem = (item) => {
+    this.state.request.items.push(item);
     this.setState(this.state);
   }
 
@@ -28,14 +32,14 @@ export default class Request extends React.Component {
     Object.assign(this.state.request.items[index], newAttrs);
     this.setState(this.state);
   }
-  
+
   render() {
     return (
       <div>
         <FileDropzone onDrop={this.onDrop}/>
         <RequestForm
           items={this.state.request.items}
-          updateItem={this.updateItem}  
+          updateItem={this.updateItem}
         />
       </div>
     );
