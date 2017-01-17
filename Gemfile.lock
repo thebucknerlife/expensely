@@ -43,6 +43,13 @@ GEM
     arel (7.1.4)
     builder (3.2.2)
     byebug (9.0.6)
+    capybara (2.11.0)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     celluloid (0.17.3)
       celluloid-essentials
       celluloid-extras
@@ -231,12 +238,15 @@ GEM
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   byebug
+  capybara
   celluloid-io
   coffee-rails (~> 4.2)
   dotenv-rails
