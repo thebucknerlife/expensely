@@ -7,11 +7,13 @@ class Expensely < SlackRubyBot::Bot
     client.say(channel: data.channel, text: new_response(request))
   end
 
-  def new_response(request)
-    "#{CHARM.sample} Receipts! My faaavorite. Let's get them uploaded here #{new_request_url(request.id)}"
-  end
+  class << self
+    def new_response(request)
+      "#{CHARM.sample} Receipts! My faaavorite. Let's get them uploaded here #{new_request_url(request)}"
+    end
 
-  def new_request_url(id)
-    Rails.application.routes.url_helpers.edit_request_url(id: request.id, host: ENV['HOST'])
+    def new_request_url(request)
+      Rails.application.routes.url_helpers.edit_request_url(id: request.id, host: ENV['HOST'])
+    end
   end
 end
