@@ -1,36 +1,48 @@
 import React, { PropTypes } from 'react';
-import update from 'immutability-helper';
+import changeCase from 'change-case';
 import RequestForm from '../components/RequestForm';
 import FileDropzone from '../components/FileDropzone';
+import upload from '../utils/upload';
+import api from '../utils/api';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
     this.state = {
-      request: {
-        items: [],
-      }
+      request: props
     };
   }
 
   onDrop = (files) => {
     files.forEach((file) => {
-      console.log(file);
-      this.newItem({
-        name: file.name,
-        preview: file.preview
-      })
+      api.requestItems.create({
+        description: file.name,
+        request_id: this.state.request.id
+      }).then((response) => {
+          const attrs = response.data
+          upload(file);
+          this.newRequestItem({
+            id: attrs.id,
+            description: attrs.description,
+            preview: file.preview,
+          })
+        })
     })
   }
 
-  newItem = (item) => {
-    this.state.request.items.push(item);
+  newRequestItem = (requestItem) => {
+    this.state.request.requestItems.push(requestItem);
     this.setState(this.state);
   }
 
-  updateItem = (newAttrs, index) => {
-    Object.assign(this.state.request.items[index], newAttrs);
+  updateRequestItem = (newAttrs, index) => {
+    Object.assign(this.state.request.requestItems[index], newAttrs);
     this.setState(this.state);
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    api.requests.update(this.state.request);
   }
 
   render() {
@@ -38,8 +50,9 @@ export default class Request extends React.Component {
       <div>
         <FileDropzone onDrop={this.onDrop}/>
         <RequestForm
-          items={this.state.request.items}
-          updateItem={this.updateItem}
+          requestItems={this.state.request.requestItems}
+          updateRequestItem={this.updateRequestItem}
+          handleSubmit={this.handleSubmit}
         />
       </div>
     );
@@ -47,6 +60,5 @@ export default class Request extends React.Component {
 }
 
 Request.propTypes = {
-  items: PropTypes.array,
+  requestItems: PropTypes.array,
 };
-

@@ -14,5 +14,8 @@
   "cacheDirectories": [
     "node_modules",
     "client/node_modules"
-  ]
+  ],
+  "dependencies": {
+    "snakecase-keys": "^1.1.0"
+  }
 }

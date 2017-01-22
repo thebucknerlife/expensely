@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111090901) do
+ActiveRecord::Schema.define(version: 20170120222301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "request_items", force: :cascade do |t|
+    t.integer  "request_id"
+    t.string   "description"
+    t.string   "category"
+    t.integer  "amount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["request_id"], name: "index_request_items_on_request_id", using: :btree
+  end
 
   create_table "requests", force: :cascade do |t|
     t.integer  "user_id"
@@ -30,5 +40,6 @@ ActiveRecord::Schema.define(version: 20170111090901) do
     t.string   "slack_id"
   end
 
+  add_foreign_key "request_items", "requests"
   add_foreign_key "requests", "users"
 end

@@ -1,28 +1,28 @@
 import React, { PropTypes } from 'react';
 
-const RequestItem = ({index, updateItem, ...props}) => {
+const RequestItem = ({index, update, ...props}) => {
   return (
     <div>
-      <img 
-        className={'request-item--image'}  
-        src={props.preview} 
+      <img
+        className={'request-item--image'}
+        src={props.preview}
       />
       <input
         className={`description-${index}`}
         type="text"
         placeholder="description"
-        value={props.name}
+        value={props.description}
         onChange={(e) => {
-          updateItem({ name: e.target.value }, index)
+          update({ description: e.target.value }, index)
         }}
       />
       <input
-        className={`type-${index}`}
+        className={`category-${index}`}
         type="text"
-        placeholder="type"
-        value={props.type}
+        placeholder="category"
+        value={props.category}
         onChange={(e) => {
-          updateItem({ type: e.target.value }, index)
+          update({ category: e.target.value }, index)
         }}
       />
       <input
@@ -31,7 +31,7 @@ const RequestItem = ({index, updateItem, ...props}) => {
         placeholder="amount"
         value={props.amount}
         onChange={(e) => {
-          updateItem({ amount: e.target.value }, index)
+          update({ amount: e.target.value }, index)
         }}
       />
     </div>
@@ -39,8 +39,16 @@ const RequestItem = ({index, updateItem, ...props}) => {
 }
 
 RequestItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  updateItem: PropTypes.func.isRequired,
+  description: PropTypes.string,
+  type: PropTypes.string,
+  amount: PropTypes.number,
+  update: PropTypes.func.isRequired,
 };
+
+RequestItem.defaultProps = {
+  description: '',
+  type: '',
+  amount: 0
+}
 
 export default RequestItem;

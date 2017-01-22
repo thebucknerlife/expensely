@@ -1,24 +1,26 @@
 import React, { PropTypes } from 'react';
 import RequestItem from './RequestItem';
 
-const RequestForm = ({items, updateItem}) => {
-  console.log(items);
+const RequestForm = ({requestItems, updateRequestItem, handleSubmit}) => {
+  console.log(requestItems);
 
-  const itemsNodes = items.map((item, index) => {
-    return (<RequestItem 
-        name={item.name}
-        preview={item.preview}
+  const requestItemNodes = requestItems.map((requestItem, index) => {
+    return (<RequestItem
+        description={requestItem.description}
+        amount={requestItem.amount}
+        category={requestItem.category}
+        preview={requestItem.preview}
         key={index}
         index={index}
-        updateItem={updateItem}
+        update={updateRequestItem}
       />
     );
   });
-  
+
   return (
     <div>
-      <form>
-        { itemsNodes }
+      <form onSubmit={handleSubmit}>
+        { requestItemNodes }
         <input
           type="submit"
         />
@@ -28,7 +30,7 @@ const RequestForm = ({items, updateItem}) => {
 }
 
 Request.propTypes = {
-  items: PropTypes.array,
+  requestItems: PropTypes.array,
 };
 
 export default RequestForm;
