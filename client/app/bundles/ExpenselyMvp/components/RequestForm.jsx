@@ -23,6 +23,7 @@ const RequestForm = ({requestItems, updateRequestItem, handleSubmit}) => {
         { requestItemNodes }
         <input
           type="submit"
+          value="Save"
         />
       </form>
     </div>

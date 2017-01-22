@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import snakecaseKeys from 'snakecase-keys';
 import camelcaseKeys from 'camelcase-keys';
 import renameKey from 'rename-key';
@@ -11,20 +12,12 @@ function request(url, method, data, params) {
     params,
     transformRequest: [
       (data) => {
-        console.log('req data', data);
-        //var snk = snakecaseKeys(data);
-        var snk = data;
-        console.log('returning', snk);
-        return snk;
+        return qs.stringify(snakecaseKeys(data));
       },
     ],
     transformResponse: [
       (data) => {
-        //console.log('resp data', data);
-        //var cml = camelcaseKeys(data);
-        var cml = data;
-        //console.log('returning', cml);
-        return cml;
+        return camelcaseKeys(JSON.parse(data));
       },
     ]
   })
@@ -45,7 +38,7 @@ export default {
   requests: {
     update: (params) => {
       var requestParams = Object.assign({}, params);
-      renameKey(requestParams, 'requestItems', 'requestItemAttributes');
+      renameKey(requestParams, 'requestItems', 'requestItemsAttributes');
       put(`/requests/${requestParams.id}`, { request: requestParams })
     }
   }
