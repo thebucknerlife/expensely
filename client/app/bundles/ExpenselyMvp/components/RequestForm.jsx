@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import RequestItem from './RequestItem';
 
-const RequestForm = ({requestItems, updateRequestItem, handleSubmit}) => {
-  console.log(requestItems);
-
+const RequestForm = ({requestItems, updateRequestItem, handleSubmit, dirty}) => {
   const requestItemNodes = requestItems.map((requestItem, index) => {
     return (<RequestItem
         description={requestItem.description}
@@ -17,10 +15,19 @@ const RequestForm = ({requestItems, updateRequestItem, handleSubmit}) => {
     );
   });
 
+  function DirtyNotice(props) {
+    if(props.dirty) {
+      return(<div>You have unsaved changes</div>);
+    } else {
+      return(<div>Saved</div>);
+    }
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         { requestItemNodes }
+        <DirtyNotice dirty={dirty}/>
         <input
           type="submit"
           value="Save"

@@ -39,7 +39,7 @@ export default {
     update: (params) => {
       var requestParams = Object.assign({}, params);
       renameKey(requestParams, 'requestItems', 'requestItemsAttributes');
-      put(`/requests/${requestParams.id}`, { request: requestParams })
+      return put(`/requests/${requestParams.id}`, { request: requestParams })
     }
   }
 }

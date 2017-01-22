@@ -9,7 +9,8 @@ export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
     this.state = {
-      request: props
+      request: props,
+      formDirty: false
     };
   }
 
@@ -32,17 +33,23 @@ export default class Request extends React.Component {
 
   newRequestItem = (requestItem) => {
     this.state.request.requestItems.push(requestItem);
+    this.state.formDirty = true;
     this.setState(this.state);
   }
 
   updateRequestItem = (newAttrs, index) => {
     Object.assign(this.state.request.requestItems[index], newAttrs);
+    this.state.formDirty = true;
     this.setState(this.state);
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    api.requests.update(this.state.request);
+    api.requests.update(this.state.request)
+      .then((response) => {
+        this.state.formDirty = false;
+        this.setState(this.state);
+      });
   }
 
   render() {
@@ -53,6 +60,7 @@ export default class Request extends React.Component {
           requestItems={this.state.request.requestItems}
           updateRequestItem={this.updateRequestItem}
           handleSubmit={this.handleSubmit}
+          dirty={this.state.formDirty}
         />
       </div>
     );
