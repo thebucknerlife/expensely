@@ -14,7 +14,7 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-    params.require(:request).permit(request_items_attributes: [:id, :description, :category, :amount])
+    params.require(:request).permit(:name, request_items_attributes: [:id, :description, :category, :amount])
   end
 
   def json_format

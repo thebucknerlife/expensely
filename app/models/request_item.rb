@@ -2,6 +2,8 @@ class RequestItem < ApplicationRecord
   belongs_to :request
   after_initialize :set_defaults
 
+  default_scope { order(created_at: :desc) }
+
   def defaults
     {
       description: '',

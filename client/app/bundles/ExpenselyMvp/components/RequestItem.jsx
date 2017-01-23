@@ -1,39 +1,39 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from "react";
 
 const RequestItem = ({index, update, ...props}) => {
+  const fields = [
+    { title: "Description", name: "description", type: "text" },
+    { title: "Category", name: "category", type: "text" },
+    { title: "Amount", name: "amount", type: "number" },
+  ]
+
+  const fieldNodes = fields.map(({ title, name, type }) => {
+      return (
+        <li className={"request-item__input-group"}>
+          <label>{title}</label>
+          <input
+            className={"request-item__input"}
+            type={type}
+            key={name}
+            placeholder={title}
+            value={props[name]}
+            onChange={(e) => {
+              update({ [name]: e.target.value }, index)
+            }}
+          />
+        </li>
+      )
+  })
+
   return (
-    <div>
+    <div className={"request-item"}>
       <img
-        className={'request-item--image'}
+        className={"request-item--image"}
         src={props.preview}
       />
-      <input
-        className={`description-${index}`}
-        type="text"
-        placeholder="description"
-        value={props.description}
-        onChange={(e) => {
-          update({ description: e.target.value }, index)
-        }}
-      />
-      <input
-        className={`category-${index}`}
-        type="text"
-        placeholder="category"
-        value={props.category}
-        onChange={(e) => {
-          update({ category: e.target.value }, index)
-        }}
-      />
-      <input
-        className={`amount-${index}`}
-        type="number"
-        placeholder="amount"
-        value={props.amount}
-        onChange={(e) => {
-          update({ amount: e.target.value }, index)
-        }}
-      />
+      <ul className={"request-item--inputs"}>
+        { fieldNodes }
+      </ul>
     </div>
   );
 }
@@ -46,8 +46,8 @@ RequestItem.propTypes = {
 };
 
 RequestItem.defaultProps = {
-  description: '',
-  type: '',
+  description: "",
+  category: "",
   amount: 0
 }
 

@@ -9,30 +9,29 @@ export default class Request extends React.Component {
   constructor(props, _railsContext) {
     super(props);
     this.state = {
-      request: props,
+      request: props.request,
       formDirty: false
     };
   }
 
   onDrop = (files) => {
     files.forEach((file) => {
-      api.requestItems.create({
+      upload(file);
+      this.newRequestItem({
         description: file.name,
-        request_id: this.state.request.id
-      }).then((response) => {
-          const attrs = response.data
-          upload(file);
-          this.newRequestItem({
-            id: attrs.id,
-            description: attrs.description,
-            preview: file.preview,
-          })
-        })
+        preview: file.preview,
+      })
     })
   }
 
   newRequestItem = (requestItem) => {
     this.state.request.requestItems.push(requestItem);
+    this.state.formDirty = true;
+    this.setState(this.state);
+  }
+
+  updateRequest = (newAttrs) => {
+    Object.assign(this.state.request, newAttrs);
     this.state.formDirty = true;
     this.setState(this.state);
   }
@@ -47,6 +46,7 @@ export default class Request extends React.Component {
     e.preventDefault();
     api.requests.update(this.state.request)
       .then((response) => {
+        Object.assign(this.state.request, response.data)
         this.state.formDirty = false;
         this.setState(this.state);
       });
@@ -57,7 +57,8 @@ export default class Request extends React.Component {
       <div>
         <FileDropzone onDrop={this.onDrop}/>
         <RequestForm
-          requestItems={this.state.request.requestItems}
+          request={this.state.request}
+          updateRequest={this.updateRequest}
           updateRequestItem={this.updateRequestItem}
           handleSubmit={this.handleSubmit}
           dirty={this.state.formDirty}
