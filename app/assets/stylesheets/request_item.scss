@@ -1,3 +1,29 @@
+$image-dimensions: 250px;
+$margin-left: 40px;
+
+.request-item {
+  display: flex;
+
+  & > * {
+    margin: 20px 0;
+
+    &:last-child{
+      margin-left: $margin-left;
+    }
+  }
+}
+
+.request-item__image {
+  width: $image-dimensions;
+  height: $image-dimensions;
+  background-color: #ccc;
+}
+
+.request-item__inputs {
+  width: calc(100% - #{$image-dimensions});
+  padding: 0;
+}
+
 .request-item__input {
   @extend .form-control;
 }
@@ -7,11 +33,3 @@
   list-style-type: none;
 }
 
-.request-item {
-  width: 100%;
-
-  & > * {
-    float: left;
-    width: 100%;
-  }
-}

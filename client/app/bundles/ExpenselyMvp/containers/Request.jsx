@@ -63,6 +63,7 @@ export default class Request extends React.Component {
           handleSubmit={this.handleSubmit}
           dirty={this.state.formDirty}
         />
+        <FileDropzone onDrop={this.onDrop}/>
       </div>
     );
   }

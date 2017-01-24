@@ -1,0 +1,17 @@
+.dropzone {
+  background-color: #eeeeee;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px auto;
+  text-align: center;
+
+  & > * {
+    margin: 5px auto;
+  }
+}
+
+.dropzone--active {
+  background-color: #fff3b3;
+}

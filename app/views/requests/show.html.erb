@@ -1,4 +1,2 @@
-<h1>Expensely</h1>
-
 <%= react_component("Request", props: { request: @request_props.deep_transform_keys {|k| k.camelize(:lower)} }, prerender: false) %>
 

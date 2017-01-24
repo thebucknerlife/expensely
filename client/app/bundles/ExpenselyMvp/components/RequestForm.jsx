@@ -39,6 +39,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSubmit, d
         { requestItemNodes }
         <DirtyNotice dirty={dirty}/>
         <input
+          className={"btn btn-success"}
           type="submit"
           value="Save"
         />

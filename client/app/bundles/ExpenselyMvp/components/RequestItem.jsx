@@ -28,10 +28,10 @@ const RequestItem = ({index, update, ...props}) => {
   return (
     <div className={"request-item"}>
       <img
-        className={"request-item--image"}
+        className={"request-item__image"}
         src={props.preview}
       />
-      <ul className={"request-item--inputs"}>
+      <ul className={"request-item__inputs"}>
         { fieldNodes }
       </ul>
     </div>
