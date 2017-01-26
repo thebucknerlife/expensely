@@ -1,7 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import snakecaseKeys from 'snakecase-keys';
-import camelcaseKeys from 'camelcase-keys';
+import { deepSnakeCaseKeys, deepCamelCaseKeys } from './caseHelpers';
 import renameKey from 'rename-key';
 
 function request(url, method, data, params) {
@@ -12,12 +11,12 @@ function request(url, method, data, params) {
     params,
     transformRequest: [
       (data) => {
-        return qs.stringify(snakecaseKeys(data));
+        return qs.stringify(deepSnakeCaseKeys(data));
       },
     ],
     transformResponse: [
       (data) => {
-        return camelcaseKeys(JSON.parse(data));
+        return deepCamelCaseKeys(JSON.parse(data));
       },
     ]
   })
