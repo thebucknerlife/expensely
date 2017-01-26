@@ -9,6 +9,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSubmit, d
         amount={requestItem.amount}
         category={requestItem.category}
         preview={requestItem.preview}
+        receipt={requestItem.receipt}
         key={index}
         index={index}
         update={updateRequestItem}

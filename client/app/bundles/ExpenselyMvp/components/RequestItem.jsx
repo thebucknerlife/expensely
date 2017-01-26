@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { get } from "lodash";
 
 const RequestItem = ({index, update, ...props}) => {
   const fields = [
@@ -9,12 +10,11 @@ const RequestItem = ({index, update, ...props}) => {
 
   const fieldNodes = fields.map(({ title, name, type }) => {
       return (
-        <li className={"request-item__input-group"}>
+        <li className={"request-item__input-group"} key={name}>
           <label>{title}</label>
           <input
             className={"request-item__input"}
             type={type}
-            key={name}
             placeholder={title}
             value={props[name]}
             onChange={(e) => {
@@ -29,7 +29,7 @@ const RequestItem = ({index, update, ...props}) => {
     <div className={"request-item"}>
       <img
         className={"request-item__image"}
-        src={props.preview}
+        src={get(props, "receipt.url") || props.preview}
       />
       <ul className={"request-item__inputs"}>
         { fieldNodes }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126034057) do
+ActiveRecord::Schema.define(version: 20170126061554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20170126034057) do
   create_table "receipts", force: :cascade do |t|
     t.integer  "request_item_id"
     t.string   "image"
+    t.json     "cloudinary_json"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["request_item_id"], name: "index_receipts_on_request_item_id", using: :btree
   end
 
   create_table "request_items", force: :cascade do |t|
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170126034057) do
     t.integer  "amount"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "receipt_id"
     t.index ["request_id"], name: "index_request_items_on_request_id", using: :btree
   end
 
@@ -49,7 +50,6 @@ ActiveRecord::Schema.define(version: 20170126034057) do
     t.string   "slack_id"
   end
 
-  add_foreign_key "receipts", "request_items"
   add_foreign_key "request_items", "requests"
   add_foreign_key "requests", "users"
 end
