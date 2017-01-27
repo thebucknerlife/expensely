@@ -30,8 +30,8 @@ const RequestItem = ({index, update, ...props}) => {
     <div className={"request-item"}>
       <div className={"request-item__image-container"}>
         <Image
-          src={get(props, "receipt.url") || props.preview}
-          isLoading={true}
+          src={get(props, "receipt.url")}
+          loadingPreview={props.preview}
         />
       </div>
       <ul className={"request-item__inputs"}>

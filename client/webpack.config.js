@@ -19,6 +19,7 @@ const config = {
   output: {
     filename: 'webpack-bundle.js',
     path: '../app/assets/webpack',
+    "publicPath": "/",
   },
 
   resolve: {
@@ -26,6 +27,7 @@ const config = {
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
+      'assets': path.resolve('./app/assets'),
     },
   },
   plugins: [
@@ -45,6 +47,21 @@ const config = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        loader: 'file-loader',
+        query: {
+          name: 'assets/[name].[ext]?[hash:8]',
+        },
+      },
+      {
+        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|png|gif)(\?.*)?$/,
+        loader: 'url-loader',
+        query: {
+          name: 'assets/[name].[ext]?[hash:8]',
+          limit: 10000,
+        },
       },
     ],
   },

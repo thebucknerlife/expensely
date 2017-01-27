@@ -4,6 +4,7 @@ import RequestForm from '../components/RequestForm';
 import FileDropzone from '../components/FileDropzone';
 import upload from '../utils/upload';
 import api from '../utils/api';
+import { findIndex } from 'lodash';
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
@@ -16,14 +17,19 @@ export default class Request extends React.Component {
 
   onDrop = (files) => {
     files.forEach((file) => {
+      let receiptId = null;
       api.receipts.create().then((resp) => {
-        console.log('resp', resp);
+        receiptId = resp.data.id;
         this.newRequestItem({
-          receipt_id: resp.data.id,
+          receiptId,
           description: file.name,
           preview: file.preview,
         })
-        upload(file, resp.data);
+        upload(file, resp.data).then((resp) => {
+          console.log(resp.data);
+          let index = findIndex(this.state.request.requestItems, ['receiptId', receiptId])
+          this.updateRequestItem({ receipt: resp.data }, index);
+        });
       })
     })
   }
