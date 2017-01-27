@@ -16,10 +16,14 @@ export default class Request extends React.Component {
 
   onDrop = (files) => {
     files.forEach((file) => {
-      upload(file);
-      this.newRequestItem({
-        description: file.name,
-        preview: file.preview,
+      api.receipts.create().then((resp) => {
+        console.log('resp', resp);
+        this.newRequestItem({
+          receipt_id: resp.data.id,
+          description: file.name,
+          preview: file.preview,
+        })
+        upload(file, resp.data);
       })
     })
   }

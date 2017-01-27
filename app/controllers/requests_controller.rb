@@ -14,11 +14,17 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-    params.require(:request).permit(:name, request_items_attributes: [:id, :description, :category, :amount])
+    params.require(:request).permit(:name, request_items_attributes: [:id, :description, :category, :amount, :receipt_id])
   end
 
   def json_format
     except = [:created_at, :updated_at, :request_id]
-    { except: except, include: { request_items: { except: except }}}
+    {
+      except: except, include: {
+        request_items: { except: except, include: {
+          receipt: { only: [:id], methods: [:url] } }
+        }
+      }
+    }
   end
 end

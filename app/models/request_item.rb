@@ -1,8 +1,10 @@
 class RequestItem < ApplicationRecord
   belongs_to :request
+  belongs_to :receipt, optional: true
+
   after_initialize :set_defaults
 
-  default_scope { order(created_at: :desc) }
+  default_scope { order(created_at: :asc) }
 
   def defaults
     {

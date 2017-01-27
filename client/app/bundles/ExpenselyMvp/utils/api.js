@@ -27,7 +27,12 @@ function put(url, data={}, params = {}) {
 }
 
 function post(url, data={}, params = {}) {
+  console.log(url, data);
   return request(url, 'post', data, params)
+}
+
+function patchFile(url, data, params = {}) {
+  return axios.request({ url, method: 'patch', data, params })
 }
 
 export default {
@@ -40,6 +45,10 @@ export default {
       renameKey(requestParams, 'requestItems', 'requestItemsAttributes');
       return put(`/requests/${requestParams.id}`, { request: requestParams })
     }
+  },
+  receipts: {
+    create: (params) => post('/receipts', params),
+    update: (data, params) => patchFile(`/receipts/${params.id}`, data)
   }
 }
 
