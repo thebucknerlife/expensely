@@ -1,0 +1,25 @@
+.image__container {
+  background-color: #ccc;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.image__frame {
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.spinner {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(250, 215, 0, 0.5);
+}

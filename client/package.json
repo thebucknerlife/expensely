@@ -28,6 +28,7 @@
     "babel-runtime": "^6.20.0",
     "camelcase-keys": "^4.0.0",
     "change-case": "^3.0.1",
+    "classnames": "^2.2.5",
     "deep-map-keys": "^1.2.0",
     "es5-shim": "^4.5.9",
     "expose-loader": "^0.7.1",

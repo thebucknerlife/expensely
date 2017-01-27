@@ -13,14 +13,13 @@ $margin-left: 40px;
   }
 }
 
-.request-item__image {
+.request-item__image-container {
   width: $image-dimensions;
   height: $image-dimensions;
-  background-color: #ccc;
 }
 
 .request-item__inputs {
-  width: calc(100% - #{$image-dimensions});
+  width: calc(100% - #{$image-dimensions} - #{$margin-left});
   padding: 0;
 }
 

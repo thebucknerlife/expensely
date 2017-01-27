@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import { get } from "lodash";
+import Image from './Image';
 
 const RequestItem = ({index, update, ...props}) => {
   const fields = [
@@ -27,10 +28,12 @@ const RequestItem = ({index, update, ...props}) => {
 
   return (
     <div className={"request-item"}>
-      <img
-        className={"request-item__image"}
-        src={get(props, "receipt.url") || props.preview}
-      />
+      <div className={"request-item__image-container"}>
+        <Image
+          src={get(props, "receipt.url") || props.preview}
+          isLoading={true}
+        />
+      </div>
       <ul className={"request-item__inputs"}>
         { fieldNodes }
       </ul>
