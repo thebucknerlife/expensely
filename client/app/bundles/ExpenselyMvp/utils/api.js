@@ -4,6 +4,7 @@ import { deepSnakeCaseKeys, deepCamelCaseKeys } from './caseHelpers';
 import renameKey from 'rename-key';
 
 function request(url, method, data, params) {
+  console.log(data, params);
   return axios.request({
     url,
     method,

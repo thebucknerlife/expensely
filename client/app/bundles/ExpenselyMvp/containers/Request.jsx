@@ -53,6 +53,18 @@ export default class Request extends React.Component {
   }
 
   handleSubmit = (e) => {
+    console.log('submit');
+    e.preventDefault();
+    api.requests.update(Object.assign(this.state.request, { submittedAt: new Date() }))
+      .then((response) => {
+        Object.assign(this.state.request, response.data)
+        this.state.formDirty = false;
+        this.setState(this.state);
+      });
+  }
+
+  handleSave = (e) => {
+    console.log('save');
     e.preventDefault();
     api.requests.update(this.state.request)
       .then((response) => {
@@ -71,6 +83,7 @@ export default class Request extends React.Component {
           updateRequest={this.updateRequest}
           updateRequestItem={this.updateRequestItem}
           handleSubmit={this.handleSubmit}
+          handleSave={this.handleSave}
           dirty={this.state.formDirty}
         />
         <FileDropzone onDrop={this.onDrop}/>
