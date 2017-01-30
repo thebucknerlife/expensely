@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import RequestItem from './RequestItem';
 
-const RequestForm = ({updateRequest, request, updateRequestItem, handleSubmit, dirty}) => {
+const RequestForm = ({updateRequest, request, updateRequestItem, handleSave, handleSubmit, dirty}) => {
 
   const requestItemNodes = request.requestItems.map((requestItem, index) => {
     return (<RequestItem
@@ -27,7 +27,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSubmit, d
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSave}>
         <input
           className="name"
           type="text"
@@ -40,9 +40,15 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSubmit, d
         { requestItemNodes }
         <DirtyNotice dirty={dirty}/>
         <input
-          className={"btn btn-success"}
+          className={"btn btn-primary"}
           type="submit"
           value="Save"
+        />
+        <input
+          className={"btn btn-success"}
+          type="submit"
+          value="Submit For Reimbursement"
+          onClick={handleSubmit}
         />
       </form>
     </div>

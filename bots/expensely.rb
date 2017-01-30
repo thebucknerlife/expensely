@@ -1,9 +1,18 @@
 class Expensely < SlackRubyBot::Bot
   CHARM = %w( Huzzah! Yas! Wootwoot! )
 
-  command 'new' do |client, data, match|
+  command 'cool' do |client, data, match|
+    client.say(channel: data.channel, text: 'nice!')
+  end
+
+  match /.*/ do |client, data, match|
     user = User.find_or_create_by(slack_id: data.user)
-    request = Request.create(user: user)
+    if user.requests.in_progress.any?
+      request = user.requests.in_progress.first
+    else
+      request = user.requests.create
+    end
+
     client.say(channel: data.channel, text: new_response(request))
   end
 
@@ -13,7 +22,7 @@ class Expensely < SlackRubyBot::Bot
     end
 
     def new_request_url(request)
-      Rails.application.routes.url_helpers.edit_request_url(id: request.id, host: ENV['HOST'])
+      Rails.application.routes.url_helpers.request_url(id: request.id, host: ENV['HOST'])
     end
   end
 end
