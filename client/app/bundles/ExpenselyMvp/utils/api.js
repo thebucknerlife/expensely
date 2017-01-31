@@ -27,7 +27,6 @@ function put(url, data={}, params = {}) {
 }
 
 function post(url, data={}, params = {}) {
-  console.log(url, data);
   return request(url, 'post', data, params)
 }
 

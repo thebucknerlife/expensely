@@ -17,7 +17,6 @@ export default class Request extends React.Component {
   onDrop = (files) => {
     files.forEach((file) => {
       api.receipts.create().then((resp) => {
-        console.log('resp', resp);
         this.newRequestItem({
           receipt_id: resp.data.id,
           description: file.name,
@@ -48,6 +47,17 @@ export default class Request extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
+    api.requests.update(newAttrs)
+      .then((response) => {
+        Object.assign(this.state.request, response.data)
+        this.state.formDirty = false;
+        this.setState(this.state);
+      });
+  }
+
+  handleSave = (e) => {
+    e.preventDefault();
     api.requests.update(this.state.request)
       .then((response) => {
         Object.assign(this.state.request, response.data)
@@ -59,13 +69,14 @@ export default class Request extends React.Component {
   render() {
     return (
       <div>
-        <FileDropzone onDrop={this.onDrop}/>
         <RequestForm
           request={this.state.request}
           updateRequest={this.updateRequest}
           updateRequestItem={this.updateRequestItem}
           handleSubmit={this.handleSubmit}
+          handleSave={this.handleSave}
           dirty={this.state.formDirty}
+          onDrop={this.onDrop}
         />
         <FileDropzone onDrop={this.onDrop}/>
       </div>
