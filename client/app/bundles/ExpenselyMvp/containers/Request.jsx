@@ -17,7 +17,6 @@ export default class Request extends React.Component {
   onDrop = (files) => {
     files.forEach((file) => {
       api.receipts.create().then((resp) => {
-        console.log('resp', resp);
         this.newRequestItem({
           receipt_id: resp.data.id,
           description: file.name,

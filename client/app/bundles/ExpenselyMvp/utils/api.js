@@ -4,7 +4,6 @@ import { deepSnakeCaseKeys, deepCamelCaseKeys } from './caseHelpers';
 import renameKey from 'rename-key';
 
 function request(url, method, data, params) {
-  console.log(data, params);
   return axios.request({
     url,
     method,
@@ -28,7 +27,6 @@ function put(url, data={}, params = {}) {
 }
 
 function post(url, data={}, params = {}) {
-  console.log(url, data);
   return request(url, 'post', data, params)
 }
 
