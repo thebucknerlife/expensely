@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 
 const FileDropzone = ({ onDrop, submittable }) => {
-  console.log(!submittable);
   if(!submittable) { return null };
 
   return (

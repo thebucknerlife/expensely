@@ -58,8 +58,6 @@ function DirtyNotice({ dirty }) {
 }
 
 function Submit({ submittable, handleSubmit, dirty }) {
-  console.log(!submittable);
-
   if (!submittable) { return <span> This reimbursement has been submitted!  </span>}
 
   return (
