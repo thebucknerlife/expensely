@@ -47,9 +47,9 @@ export default class Request extends React.Component {
   }
 
   handleSubmit = (e) => {
-    console.log('submit');
     e.preventDefault();
-    api.requests.update(Object.assign(this.state.request, { submittedAt: new Date() }))
+    let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
+    api.requests.update(newAttrs)
       .then((response) => {
         Object.assign(this.state.request, response.data)
         this.state.formDirty = false;
@@ -58,7 +58,6 @@ export default class Request extends React.Component {
   }
 
   handleSave = (e) => {
-    console.log('save');
     e.preventDefault();
     api.requests.update(this.state.request)
       .then((response) => {
@@ -71,7 +70,6 @@ export default class Request extends React.Component {
   render() {
     return (
       <div>
-        <FileDropzone onDrop={this.onDrop}/>
         <RequestForm
           request={this.state.request}
           updateRequest={this.updateRequest}
@@ -79,6 +77,7 @@ export default class Request extends React.Component {
           handleSubmit={this.handleSubmit}
           handleSave={this.handleSave}
           dirty={this.state.formDirty}
+          onDrop={this.onDrop}
         />
         <FileDropzone onDrop={this.onDrop}/>
       </div>
