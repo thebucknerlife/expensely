@@ -8,6 +8,7 @@ end
 gem "react_on_rails", "~> 6"
 gem 'dotenv-rails', :groups => [:development, :test]
 gem "slack-ruby-bot"
+gem 'slack-ruby-client'
 gem "celluloid-io"
 gem 'carrierwave', '~> 1.0'
 gem 'cloudinary'
