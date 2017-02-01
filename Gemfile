@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "pry-rails"
+gem "awesome_print"
 gem "react_on_rails", "~> 6"
 gem 'dotenv-rails', :groups => [:development, :test]
 gem "slack-ruby-bot"

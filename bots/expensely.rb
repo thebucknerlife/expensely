@@ -6,7 +6,9 @@ class Expensely < SlackRubyBot::Bot
   end
 
   match /.*/ do |client, data, match|
-    user = User.find_or_create_by(slack_id: data.user)
+    user = User.find_or_initialize_by(slack_id: data.user)
+    set_attrs_from_slack(user) if user.new_record?
+
     if user.requests.in_progress.any?
       request = user.requests.in_progress.first
     else
@@ -23,6 +25,17 @@ class Expensely < SlackRubyBot::Bot
 
     def new_request_url(request)
       Rails.application.routes.url_helpers.request_url(id: request.id, host: ENV['HOST'])
+    end
+
+    def set_attrs_from_slack(user)
+      response = client.users_info(user: user.slack_id)
+      attrs = { 'slack_name' => response.user.name }
+      attrs.merge(response.user.profile.to_h.slice('email', 'first_name', 'last_name'))
+      user.update(attrs)
+    end
+
+    def client
+      @client ||= Slack::Web::Client.new
     end
   end
 end
