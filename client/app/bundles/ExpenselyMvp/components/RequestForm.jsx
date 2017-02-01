@@ -22,15 +22,17 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSave, han
     <div>
       <form onSubmit={handleSave}>
         <FileDropzone onDrop={onDrop} submittable={!request.submittedAt}/>
-        <input
-          className="name"
-          type="text"
-          placeholder="request name"
-          value={request.name}
-          onChange={(e) => {
-            updateRequest({ name: e.target.value })
-          }}
-        />
+        <div className={"form-group"} >
+          <input
+            className="name form-control"
+            type="text"
+            placeholder="What is the name of your reimbursement request?"
+            value={request.name}
+            onChange={(e) => {
+              updateRequest({ name: e.target.value })
+            }}
+          />
+        </div>
         { requestItemNodes }
         <Submit
           handleSubmit={handleSubmit}
@@ -51,9 +53,9 @@ export default RequestForm;
 
 function DirtyNotice({ dirty }) {
   if (dirty) {
-    return(<div>You have unsaved changes</div>);
+    return(<div className={'dirty-notice'}>You have unsaved changes</div>);
   } else {
-    return(<div>Saved</div>);
+    return(<div className={'dirty-notice'}>Saved</div>);
   }
 }
 
@@ -61,15 +63,15 @@ function Submit({ submittable, handleSubmit, dirty }) {
   if (!submittable) { return <span> This reimbursement has been submitted!  </span>}
 
   return (
-    <div>
+    <div className="submit-container">
       <DirtyNotice dirty={dirty} />
       <input
-        className={"btn btn-primary"}
+        className={"btn btn-primary btn-lrg"}
         type="submit"
         value="Save"
       />
       <input
-        className={"btn btn-success"}
+        className={"btn btn-success btn-lrg"}
         type="submit"
         value="Submit For Reimbursement"
         onClick={handleSubmit}
