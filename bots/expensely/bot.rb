@@ -2,13 +2,14 @@ module Expensely
   class Bot < SlackRubyBot::Bot
     CHARM = %w( Huzzah! Yas! Wootwoot! )
 
-    command 'cool' do |client, data, match|
-      client.say(channel: data.channel, text: 'nice!')
-    end
+    #command 'cool' do |client, data, match|
+      #client.say(channel: data.channel, text: 'nice!')
+    #end
 
     match /.*/ do |client, data, match|
+      team_id = data.team
       user = User.find_or_initialize_by(slack_id: data.user)
-      set_attrs_from_slack(user) if user.new_record?
+      set_attrs_from_slack(user, team_id) if user.new_record?
 
       if user.requests.in_progress.any?
         request = user.requests.in_progress.first
@@ -28,15 +29,17 @@ module Expensely
         Rails.application.routes.url_helpers.request_url(id: request.id, host: ENV['HOST'])
       end
 
-      def set_attrs_from_slack(user)
-        response = client.users_info(user: user.slack_id)
+      def set_attrs_from_slack(user, team_id)
+        byebug
+        team = Team.find_by(team_id: team_id)
+        response = client(team).users_info(user: user.slack_id)
         attrs = { 'slack_name' => response.user.name }
-        attrs.merge(response.user.profile.to_h.slice('email', 'first_name', 'last_name'))
+        attrs.merge!(response.user.profile.to_h.slice('email', 'first_name', 'last_name'))
         user.update(attrs)
       end
 
-      def client
-        @client ||= Slack::Web::Client.new
+      def client(team)
+        Slack::Web::Client.new(token: team.access_token)
       end
     end
   end

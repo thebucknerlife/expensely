@@ -6,7 +6,7 @@ class AddToSlack
 
     def params
       {
-        scope: 'incoming-webhook,bot,users.profile:read',
+        scope: 'bot,users:read',
         client_id: ENV['SLACK_APP_CLIENT_ID'],
         redirect_uri: "http://#{ENV['HOST']}/auth/slack",
       }

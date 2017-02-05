@@ -1,11 +1,17 @@
 module Expensely
   class App
     def self.start_teams
-      Organization.all.each do |org|
-        token = org.slack_token_json['bot']['bot_access_token']
-        bot = SlackRubyBot::Server.new(token: token)
+      Team.all.each do |team|
+        log "Starting bot for team ##{team.id}, #{team.team_name}..."
+        bot = SlackRubyBot::Server.new(token: team.bot_access_token)
         bot.start_async
+        log "...done."
       end
+      log "Finished starting all bots!"
+    end
+
+    def self.log(msg)
+      Rails.logger.info(msg)
     end
   end
 end

@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201070715) do
+ActiveRecord::Schema.define(version: 20170205054103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "organizations", force: :cascade do |t|
-    t.json     "slack_token_json"
-    t.string   "team_name"
-    t.string   "team_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
 
   create_table "receipts", force: :cascade do |t|
     t.integer  "request_item_id"
@@ -49,6 +41,16 @@ ActiveRecord::Schema.define(version: 20170201070715) do
     t.string   "name"
     t.datetime "submitted_at"
     t.index ["user_id"], name: "index_requests_on_user_id", using: :btree
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.json     "oauth_response"
+    t.string   "team_name"
+    t.string   "team_id"
+    t.string   "access_token"
+    t.string   "bot_access_token"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "users", force: :cascade do |t|
