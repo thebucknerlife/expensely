@@ -1,7 +1,11 @@
-class Cool < SlackRubyBot::Commands::Base
-  command 'chill'
+module Expensely
+  module Commands
+    class Cool < SlackRubyBot::Commands::Base
+      command 'chill'
 
-  def self.call(client, data, match)
-    client.say(channel: data.channel, text: 'nice!')
+      def self.call(client, data, match)
+        client.say(channel: data.channel, text: 'nice!')
+      end
+    end
   end
 end
