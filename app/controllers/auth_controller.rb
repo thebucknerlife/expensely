@@ -1,3 +1,5 @@
+require "#{Rails.root}/bots/expensely"
+
 class AuthController < ApplicationController
 
   def slack
@@ -10,12 +12,13 @@ class AuthController < ApplicationController
       oauth_response: response,
       team_name: response['team_name'],
       access_token: response['access_token'],
-      bot_access_token: response['bot_access_token'],
+      bot_access_token: response['bot']['bot_access_token'],
     )
     start_bot(team) if new_team
 
     redirect_to :success
-  rescue Slack::Web::Api::Error
+  rescue Slack::Web::Api::Error => e
+    logger.info("Slack Auth Failed - #{e}")
     redirect_to :failed
   end
 
