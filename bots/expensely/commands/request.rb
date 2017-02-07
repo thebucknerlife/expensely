@@ -2,7 +2,6 @@ module Expensely
   module Commands
     class Request < SlackRubyBot::Commands::Base
       extend Expensely::Utils::WebClient
-      CHARM = %w( Huzzah! Yas! Wootwoot! )
 
       match /.*/
 
@@ -30,11 +29,10 @@ module Expensely
         end
 
         def new_response(request)
-          "#{CHARM.sample} Receipts! My faaavorite. Let's get them uploaded here #{request.new_request_url}"
+          "Receipts! My faaavorite. Let's get them uploaded here #{request.new_request_url}"
         end
 
         def set_attrs_from_slack(user, team_id)
-          byebug
           team = Team.find_by(team_id: team_id)
           response = web_client(team).users_info(user: user.slack_id)
           attrs = { 'slack_name' => response.user.name }
