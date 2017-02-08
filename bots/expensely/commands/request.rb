@@ -8,24 +8,22 @@ module Expensely
       def self.call(client, data, match)
         user = find_or_create_user_from data
 
-        if user.requests.in_progress.any?
-          request = user.requests.in_progress.first
+        request = if user.requests.in_progress.any?
+          user.requests.in_progress.order(:created_at).first
         else
-          request = user.requests.create
+          user.requests.create
         end
 
-        client.say(
-          channel: data.channel,
-          text: user.new? ? first_response(request, user) : new_response(request)
-        )
+        client.say(text: text(request, user), channel: data.channel)
       end
 
-      def self.first_response(request, user)
-        "hey hey hey, its time to balance the books #{user.first_name}! let's get you reimbursed #{request.new_request_url}"
-      end
-
-      def self.new_response(request)
-        "Receipts! My faaavorite. Let's get them uploaded here #{request.new_request_url}"
+      def self.text(request, user)
+        url = request.new_request_url
+        if user.new?
+          "hey hey hey, its time to balance the books #{user.first_name}! let's get you reimbursed #{url}"
+        else
+          "Receipts! My faaavorite. Let's get them uploaded here #{url}"
+        end
       end
     end
   end
