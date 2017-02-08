@@ -6,6 +6,11 @@ RSpec.describe Expensely::Commands::Review do
   let(:match) { double }
   let!(:team_id) { Team.create(team_id: 'XYZ-987') }
   let!(:user) { User.create(slack_id: user_slack_id) }
+  let!(:requests) do
+    user.requests.create(submitted_at: 1.days.ago)
+    user.requests.create(submitted_at: 3.days.ago)
+    user.requests.create(submitted_at: 20.days.ago)
+  end
   let(:user_slack_id) { 'UAU123' }
   let(:data) { double(team:  'XYZ-987', user: user_slack_id, channel: "some-channel") }
   let(:subject) { described_class.call(client, data, match) }
