@@ -27,7 +27,7 @@ RSpec.describe Expensely::Commands::Request do
       it "should respond with a greeting and a request url" do
         expect(client).to receive(:say).with(
           channel: "some-channel",
-          text: "hey hey hey, its time to balance the books Bobby! let's get you reimbursed http://localhost:3000/requests/2"
+          text: "hey hey hey, its time to balance the books Bobby! let's get you reimbursed http://localhost:3000/requests/1"
         )
         subject
       end
