@@ -5,8 +5,8 @@ module Expensely
 
       def find_or_create_user_from(data)
         user = ::User.find_or_initialize_by(slack_id: data.user)
-        user.newly_created = user.new_record?
-        set_attrs_from_slack(user, data.team) if user.newly_created
+        user.new = user.new_record?
+        set_attrs_from_slack(user, data.team) if user.new?
 
         user
       end

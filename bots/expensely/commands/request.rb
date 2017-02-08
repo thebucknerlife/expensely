@@ -16,18 +16,16 @@ module Expensely
 
         client.say(
           channel: data.channel,
-          text: user.newly_created ? first_response(request, user) : new_response(request)
+          text: user.new? ? first_response(request, user) : new_response(request)
         )
       end
 
-      class << self
-        def first_response(request, user)
-          "hey hey hey, its time to balance the books #{user.first_name}! let's get you reimbursed #{request.new_request_url}"
-        end
+      def self.first_response(request, user)
+        "hey hey hey, its time to balance the books #{user.first_name}! let's get you reimbursed #{request.new_request_url}"
+      end
 
-        def new_response(request)
-          "Receipts! My faaavorite. Let's get them uploaded here #{request.new_request_url}"
-        end
+      def self.new_response(request)
+        "Receipts! My faaavorite. Let's get them uploaded here #{request.new_request_url}"
       end
     end
   end

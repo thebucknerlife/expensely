@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  attr_accessor :newly_created
+  attr_accessor :new
 
   has_many :requests, dependent: :destroy
+
+  alias_method :new?, :new
 end
