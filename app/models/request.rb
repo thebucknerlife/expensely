@@ -6,6 +6,7 @@ class Request < ApplicationRecord
 
   scope :in_progress, -> { where(submitted_at: nil) }
   scope :submitted, -> { where.not(submitted_at: nil) }
+  scope :approved, -> { where('submitted_at < ?', 10.days.ago) }
 
 
   def new_request_url
