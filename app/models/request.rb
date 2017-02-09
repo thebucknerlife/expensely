@@ -5,7 +5,7 @@ class Request < ApplicationRecord
   accepts_nested_attributes_for :request_items
 
   scope :in_progress, -> { where(submitted_at: nil) }
-  scope :submitted, -> { where.not(submitted_at: nil) }
+  scope :submitted, -> { where('submitted_at >= ?', 10.days.ago) }
   scope :approved, -> { where('submitted_at < ?', 10.days.ago) }
 
 

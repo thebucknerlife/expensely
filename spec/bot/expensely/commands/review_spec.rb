@@ -6,9 +6,14 @@ RSpec.describe Expensely::Commands::Review do
   let(:match) { double }
   let!(:team_id) { Team.create(team_id: 'XYZ-987') }
   let!(:user) { User.create(slack_id: user_slack_id) }
-  let!(:requests) do
+  let!(:in_progress_requests) do
+    user.requests.create(submitted_at: nil)
+  end
+  let!(:submitted_requests) do
     user.requests.create(submitted_at: 1.days.ago)
     user.requests.create(submitted_at: 3.days.ago)
+  end
+  let!(:approved_requests) do
     user.requests.create(submitted_at: 20.days.ago)
   end
   let(:user_slack_id) { 'UAU123' }

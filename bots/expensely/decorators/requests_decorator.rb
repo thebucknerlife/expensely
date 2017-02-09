@@ -3,16 +3,26 @@ module Expensely
     module RequestsDecorator
 
       def self.review(requests)
-        str = "Requests\n"
-        reqs_string = requests.flat_map do |k, reqs|
-          sub_str = [k.to_s.capitalize]
-          foo = reqs.map do |req|
-            req.new_request_url
+        lines = ["Requests", ("=" * 30)]
+
+        requests.each do |type, reqs|
+          lines << type.to_s.capitalize
+          lines << ("-" * 30)
+
+          reqs.each do |req|
+            lines << format_request_link(req)
           end
-          sub_str = sub_str.concat foo
-          sub_str.join("\n")
-        end.join("\n")
-        str << reqs_string
+
+          lines << "\n"
+        end
+
+        lines.join("\n").gsub(/(\n)*$/, "")
+      end
+
+      def self.format_request_link(request)
+        url = request.new_request_url
+        name = request.name || "Request Number #{request.id}"
+        "* <#{url}|#{name}>"
       end
     end
   end
