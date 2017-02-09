@@ -11,7 +11,8 @@ export default class Request extends React.Component {
     super(props);
     this.state = {
       request: props.request,
-      formDirty: false
+      formDirty: false,
+      token: props.token
     };
   }
 
@@ -58,7 +59,7 @@ export default class Request extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
-    api.requests.update(newAttrs)
+    api.requests.update(newAttrs, this.state.token)
       .then((response) => {
         Object.assign(this.state.request, response.data)
         this.state.formDirty = false;
@@ -68,7 +69,7 @@ export default class Request extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    api.requests.update(this.state.request)
+    api.requests.update(this.state.request, this.state.token)
       .then((response) => {
         Object.assign(this.state.request, response.data)
         this.state.formDirty = false;

@@ -39,10 +39,10 @@ export default {
     create: (params) => post('/request_items', { request_item: params })
   },
   requests: {
-    update: (params) => {
+    update: (params, token) => {
       var requestParams = Object.assign({}, params);
       renameKey(requestParams, 'requestItems', 'requestItemsAttributes');
-      return put(`/requests/${requestParams.id}`, { request: requestParams })
+      return put(`/requests/${requestParams.id}`, { request: requestParams }, { token: token })
     }
   },
   receipts: {

@@ -1,2 +1,2 @@
-<%= react_component("Request", props: { request: @request_props.deep_transform_keys {|k| k.camelize(:lower)} }, prerender: false) %>
+<%= react_component("Request", props: { request: @request_props.deep_transform_keys {|k| k.camelize(:lower)}, token: @request.token }, prerender: false) %>
 
