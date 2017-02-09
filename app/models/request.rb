@@ -1,4 +1,6 @@
 class Request < ApplicationRecord
+  has_secure_token
+
   belongs_to :user
   has_many :request_items, dependent: :destroy
 
@@ -10,6 +12,6 @@ class Request < ApplicationRecord
 
 
   def new_request_url
-    Rails.application.routes.url_helpers.request_url(id: id, host: ENV['HOST'])
+    Rails.application.routes.url_helpers.request_url(id: id, host: ENV['HOST'], token: token)
   end
 end
