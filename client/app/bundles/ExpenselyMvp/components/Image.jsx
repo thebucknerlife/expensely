@@ -3,8 +3,6 @@ import classnames from 'classnames';
 const spinnerUrl = require('assets/rolling.svg');
 
 const Image = ({ src, loadingPreview }) => {
-  console.log(src, loadingPreview);
-
   const spinnerClass = classnames('spinner')
   const srcUrl = (loadingPreview || src);
   const divStyle = { backgroundImage: 'url(' + srcUrl + ')' };

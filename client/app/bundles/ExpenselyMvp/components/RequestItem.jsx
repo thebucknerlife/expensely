@@ -1,29 +1,51 @@
 import React, { PropTypes } from "react";
-import { get } from "lodash";
+import { get, find } from "lodash";
 import Image from './Image';
 
 const RequestItem = ({index, update, ...props}) => {
   const fields = [
     { title: "Description", name: "description", type: "text" },
-    { title: "Category", name: "category", type: "text" },
-    { title: "Amount", name: "amount", type: "number" },
+    { title: "Category", name: "category", type: "dropdown" },
+    { title: "Amount", name: "amount", type: "money" },
   ]
 
+  // todo: add support for float in number field, setup default value
+
   const fieldNodes = fields.map(({ title, name, type }) => {
+    if (type === 'dropdown') {
       return (
-        <li className={"request-item__input-group"} key={name}>
-          <label>{title}</label>
-          <input
-            className={"request-item__input"}
-            type={type}
-            placeholder={title}
-            value={props[name]}
-            onChange={(e) => {
-              update({ [name]: e.target.value }, index)
-            }}
-          />
-        </li>
+        <Dropdown
+          index={index}
+          key={name}
+          update={update}
+          title={title}
+          name={name}
+          { ...props }
+        />
       )
+    } else if (type === 'money') {
+      return (
+        <MoneyInput
+          index={index}
+          key={name}
+          update={update}
+          title={title}
+          name={name}
+          { ...props }
+        />
+      )
+    } else {
+      return (
+        <BasicInput
+          index={index}
+          key={name}
+          update={update}
+          title={title}
+          name={name}
+          { ...props }
+        />
+      )
+    }
   })
 
   return (
@@ -55,3 +77,68 @@ RequestItem.defaultProps = {
 }
 
 export default RequestItem;
+
+function MoneyInput({ name, title, type, update, index, ...props}) {
+  let value = props[name] / 100;
+
+  return (
+    <li className={"request-item__input-group"}>
+      <label>{title}</label>
+      <input
+        className={"request-item__input"}
+        type={"number"}
+        placeholder={title}
+        value={value}
+        onChange={(e) => {
+          update({ [name]: (e.target.value * 100) }, index)
+        }}
+      />
+    </li>
+  )
+}
+
+function BasicInput({ name, title, type, update, index, ...props}) {
+  return (
+    <li className={"request-item__input-group"}>
+      <label>{title}</label>
+      <input
+        className={"request-item__input"}
+        type={"text"}
+        placeholder={title}
+        value={props[name]}
+        onChange={(e) => {
+          update({ [name]: e.target.value }, index)
+        }}
+      />
+    </li>
+  )
+}
+
+function Dropdown({ name, title, update, index, ...props}) {
+  let options = [
+    {name: 'Select A Category', value: 'none'},
+    {name: 'Meal', value: 'meal'},
+    {name: 'Travel', value: 'travel'},
+  ]
+
+  let optionNodes = options.map(({ name, value }) => {
+    return (
+      <option value={value} key={value}>{name}</option>
+    )
+  })
+
+  return (
+    <li className={"request-item__input-group"}>
+      <label>{title}</label>
+      <select
+        className={"request-item__input"}
+        value={props[name]}
+        onChange={(e) => {
+          update({ [name]: e.target.value }, index)
+        }}
+      >
+        { optionNodes }
+      </select>
+    </li>
+  )
+}
