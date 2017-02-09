@@ -3,9 +3,11 @@
 require_relative 'config/environment'
 require_relative 'bots/expensely'
 
-Thread.abort_on_exception = true
-Thread.new do
-  Expensely::App.start_teams
+if ENV['RUN_BOT'] == 'true'
+  Thread.abort_on_exception = true
+  Thread.new do
+    Expensely::App.start_teams
+  end
 end
 
 run Rails.application
