@@ -3,7 +3,8 @@ module Expensely
     class Request < SlackRubyBot::Commands::Base
       extend Expensely::Utils::User
 
-      match /.*/
+      #match /.*/
+      command 'new'
 
       def self.call(client, data, match)
         user = find_or_create_user_from data

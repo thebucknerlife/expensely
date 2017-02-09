@@ -9,6 +9,7 @@ module Expensely
         user = find_or_create_user_from data
 
         requests = {
+          in_progress: user.requests.in_progress,
           submitted: user.requests.submitted,
           approved: user.requests.approved,
         }
