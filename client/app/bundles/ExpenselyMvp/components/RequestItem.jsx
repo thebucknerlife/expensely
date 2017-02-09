@@ -56,9 +56,14 @@ const RequestItem = ({index, update, ...props}) => {
           loadingPreview={props.preview}
         />
       </div>
-      <ul className={"request-item__inputs"}>
-        { fieldNodes }
-      </ul>
+      <div className={"request-item__inputs-container"}>
+        <div className={"request-item__delete"}>
+          <span className={"delete-icon"} onClick={() => { props.delete(index) }}>&#10006;</span>
+        </div>
+        <ul className={"request-item__inputs"}>
+          { fieldNodes }
+        </ul>
+      </div>
     </div>
   );
 }

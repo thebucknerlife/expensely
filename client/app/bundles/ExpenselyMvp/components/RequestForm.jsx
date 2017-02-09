@@ -2,9 +2,11 @@ import React, { PropTypes } from 'react';
 import RequestItem from './RequestItem';
 import FileDropzone from './FileDropzone';
 
-const RequestForm = ({updateRequest, request, updateRequestItem, handleSave, handleSubmit, dirty, onDrop}) => {
+const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop}) => {
 
   const requestItemNodes = request.requestItems.map((requestItem, index) => {
+    if (requestItem._destroy) return null;
+
     return (<RequestItem
         description={requestItem.description}
         amount={requestItem.amount}
@@ -14,6 +16,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSave, han
         key={index}
         index={index}
         update={updateRequestItem}
+        delete={deleteRequestItem}
       />
     );
   });
@@ -36,6 +39,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, handleSave, han
         { requestItemNodes }
         <Submit
           handleSubmit={handleSubmit}
+          handleSave={handleSave}
           submittable={!request.submittedAt}
           dirty={dirty}
         />
@@ -59,7 +63,7 @@ function DirtyNotice({ dirty }) {
   }
 }
 
-function Submit({ submittable, handleSubmit, dirty }) {
+function Submit({ submittable, handleSave, handleSubmit, dirty }) {
   if (!submittable) { return <span> This reimbursement has been submitted!  </span>}
 
   return (
@@ -69,6 +73,7 @@ function Submit({ submittable, handleSubmit, dirty }) {
         className={"btn btn-primary btn-lrg"}
         type="submit"
         value="Save"
+        onClick={handleSave}
       />
       <input
         className={"btn btn-success btn-lrg"}

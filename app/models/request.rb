@@ -2,7 +2,7 @@ class Request < ApplicationRecord
   belongs_to :user
   has_many :request_items, dependent: :destroy
 
-  accepts_nested_attributes_for :request_items
+  accepts_nested_attributes_for :request_items, allow_destroy: true
 
   scope :in_progress, -> { where(submitted_at: nil) }
   scope :submitted, -> { where('submitted_at >= ?', 10.days.ago) }

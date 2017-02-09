@@ -18,9 +18,18 @@ $margin-left: 40px;
   height: $image-dimensions;
 }
 
-.request-item__inputs {
+.request-item__inputs-container {
   width: calc(100% - #{$image-dimensions} - #{$margin-left});
   padding: 0;
+}
+
+.request-item__delete {
+  text-align: right;
+}
+
+.delete-icon {
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .request-item__input {

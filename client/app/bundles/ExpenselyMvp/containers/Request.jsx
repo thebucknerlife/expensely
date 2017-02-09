@@ -26,7 +26,6 @@ export default class Request extends React.Component {
           preview: file.preview,
         })
         upload(file, resp.data).then((resp) => {
-          console.log(resp.data);
           let index = findIndex(this.state.request.requestItems, ['receiptId', receiptId])
           this.updateRequestItem({ receipt: resp.data }, index);
         });
@@ -50,6 +49,10 @@ export default class Request extends React.Component {
     Object.assign(this.state.request.requestItems[index], newAttrs);
     this.state.formDirty = true;
     this.setState(this.state);
+  }
+
+  deleteRequestItem = (index) => {
+    this.updateRequestItem({'_destroy': true}, index);
   }
 
   handleSubmit = (e) => {
@@ -82,6 +85,7 @@ export default class Request extends React.Component {
           updateRequestItem={this.updateRequestItem}
           handleSubmit={this.handleSubmit}
           handleSave={this.handleSave}
+          deleteRequestItem={this.deleteRequestItem}
           dirty={this.state.formDirty}
           onDrop={this.onDrop}
         />
