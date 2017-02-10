@@ -10,8 +10,11 @@ module Expensely
       def self.help_text
         [
           "Hey! Here are the things I can do!",
-          "* new -> create a new reimbursement request or return your existing request url",
-          "* review -> list your existing reimbursement requests"
+          "\n",
+          "* hi -> create a new reimbursement request or return your existing request url",
+          "* review -> list your existing reimbursement requests",
+          "\n",
+          "Still have questions? Write us at expensely@thirtytoship.io or visit us at expensely.thirtytoship.io"
         ].join("\n")
       end
     end

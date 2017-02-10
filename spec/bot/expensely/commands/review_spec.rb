@@ -21,7 +21,6 @@ RSpec.describe Expensely::Commands::Review do
   let(:subject) { described_class.call(client, data, match) }
 
   describe "call" do
-
     context "when something is up" do
       it "should respond familiarily with a request url" do
         expect(client).to receive(:say).with(
