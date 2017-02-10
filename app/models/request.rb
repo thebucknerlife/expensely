@@ -14,4 +14,8 @@ class Request < ApplicationRecord
   def new_request_url
     Rails.application.routes.url_helpers.request_url(id: id, host: ENV['HOST'], token: token)
   end
+
+  def submitted?
+    submitted_at?
+  end
 end

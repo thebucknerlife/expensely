@@ -1,3 +1,5 @@
+require("#{Rails.root}/bots/expensely/utils/bot_client")
+
 class RequestsController < ApplicationController
   before_action :get_request
   before_action :verify_token
@@ -8,6 +10,8 @@ class RequestsController < ApplicationController
 
   def update
     @request.update(request_params)
+    send_congrats if @request.submitted?
+
     render json: @request.as_json(json_format)
   end
 
@@ -15,6 +19,10 @@ class RequestsController < ApplicationController
 
   def get_request
     @request = Request.find_by(id: params[:id])
+  end
+
+  def send_congrats
+    Expensely::Utils::BotClient.tell_user(@request.user, "Alright bestie, see you later!")
   end
 
   def verify_token

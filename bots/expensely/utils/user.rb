@@ -13,6 +13,7 @@ module Expensely
 
       def set_attrs_from_slack(user, team_id)
         team = Team.find_by(team_id: team_id)
+        user.team = team
         response = web_client(team).users_info(user: user.slack_id)
         attrs = { 'slack_name' => response.user.name }
         attrs.merge!(response.user.profile.to_h.slice('email', 'first_name', 'last_name'))
