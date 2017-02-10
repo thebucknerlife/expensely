@@ -4,6 +4,8 @@ module Expensely
       include Expensely::Utils::WebClient
 
       def find_or_create_user_from(data)
+        Rails.logger.info("~~ Find or Create using data #{ap data}~~")
+
         user = ::User.find_or_initialize_by(slack_id: data.user)
         user.new = user.new_record?
         set_attrs_from_slack(user, data.team) if user.new?
