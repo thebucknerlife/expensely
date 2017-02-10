@@ -124,6 +124,10 @@ function Dropdown({ name, title, update, index, ...props}) {
     {name: 'Select A Category', value: 'none'},
     {name: 'Meal', value: 'meal'},
     {name: 'Travel', value: 'travel'},
+    {name: 'Phone', value: 'travel'},
+    {name: 'Office Supplies', value: 'travel'},
+    {name: 'Postage', value: 'travel'},
+    {name: 'Other', value: 'travel'},
   ]
 
   let optionNodes = options.map(({ name, value }) => {
