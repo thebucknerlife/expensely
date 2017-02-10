@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { get, find } from "lodash";
 import Image from './Image';
 
-const RequestItem = ({index, update, ...props}) => {
+const RequestItem = ({index, update, submittable, ...props}) => {
   const fields = [
     { title: "Description", name: "description", type: "text" },
     { title: "Category", name: "category", type: "dropdown" },
@@ -12,6 +12,15 @@ const RequestItem = ({index, update, ...props}) => {
   // todo: add support for float in number field, setup default value
 
   const fieldNodes = fields.map(({ title, name, type }) => {
+    console.log(props);
+    if(!submittable) return (
+      <li className={"request-item__input-group"}>
+        <label>{title}</label>
+        <p>{props[name]}</p>
+      </li>
+    )
+
+
     if (type === 'dropdown') {
       return (
         <Dropdown
@@ -120,17 +129,8 @@ function BasicInput({ name, title, type, update, index, ...props}) {
 }
 
 function Dropdown({ name, title, update, index, ...props}) {
-  let options = [
-    {name: 'Select A Category', value: 'none'},
-    {name: 'Meal', value: 'meal'},
-    {name: 'Travel', value: 'travel'},
-    {name: 'Phone', value: 'travel'},
-    {name: 'Office Supplies', value: 'travel'},
-    {name: 'Postage', value: 'travel'},
-    {name: 'Other', value: 'travel'},
-  ]
 
-  let optionNodes = options.map(({ name, value }) => {
+  let optionNodes = options().map(({ name, value }) => {
     return (
       <option value={value} key={value}>{name}</option>
     )
@@ -150,4 +150,16 @@ function Dropdown({ name, title, update, index, ...props}) {
       </select>
     </li>
   )
+}
+
+function options() {
+  return [
+    {name: 'Select A Category', value: 'none'},
+    {name: 'Meal', value: 'meal'},
+    {name: 'Travel', value: 'travel'},
+    {name: 'Phone', value: 'phone'},
+    {name: 'Office Supplies', value: 'office_supplies'},
+    {name: 'Postage', value: 'postage'},
+    {name: 'Other', value: 'other'},
+  ];
 }

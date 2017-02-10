@@ -17,6 +17,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
         index={index}
         update={updateRequestItem}
         delete={deleteRequestItem}
+        submittable={!request.submittedAt}
       />
     );
   });
@@ -26,15 +27,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
       <form onSubmit={handleSave}>
         <FileDropzone onDrop={onDrop} submittable={!request.submittedAt}/>
         <div className={"form-group"} >
-          <input
-            className="name form-control"
-            type="text"
-            placeholder="What is the name of your reimbursement request?"
-            value={request.name}
-            onChange={(e) => {
-              updateRequest({ name: e.target.value })
-            }}
-          />
+          <RequestName submittable={!request.submittedAt} request={request} />
         </div>
         { requestItemNodes }
         <Submit
@@ -83,4 +76,23 @@ function Submit({ submittable, handleSave, handleSubmit, dirty }) {
       />
     </div>
   );
+}
+
+function RequestName({ submittable, request }) {
+  console.log(request);
+  if (submittable) {
+    return (
+      <input
+        className="name form-control"
+        type="text"
+        placeholder="What is the name of your reimbursement request?"
+        value={request.name}
+        onChange={(e) => {
+          updateRequest({ name: e.target.value })
+        }}
+      />
+    )
+  } else {
+    return <h3>{request.name}</h3>
+  }
 }
