@@ -19,7 +19,7 @@ class Receipt < ApplicationRecord
   end
 
   def pdf_to_image
-    original_url.gsub(/\.pdf$/,".jpg")
+    original_url.gsub(/\.pdf$/,".jpeg")
   end
 
   def thumbnail

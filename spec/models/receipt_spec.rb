@@ -6,28 +6,24 @@ RSpec.describe Receipt, type: :model do
   let(:receipt) { Receipt.new(request_item: request_item, cloudinary_json: json) }
   let(:json) { { url: 'http://res.cloudinary.com/dpquc2ssm/image/upload/v1486788807/x7w8cbcnj1eyz1nhnupf.jpeg' } }
 
-  it 'is a thing' do
-    expect(receipt).to be_valid?
+  it 'has a valid #url' do
+    expect(receipt.url).to eq('http://res.cloudinary.com/dpquc2ssm/image/upload/v1486788807/x7w8cbcnj1eyz1nhnupf.jpeg')
   end
 
-  it 'has a valid url' do
-    expect(receipt.url).to eq('')
-  end
-
-  it 'has a valid url' do
-    expect(receipt.thumbnail).to eq('')
+  it 'has a valid #thumbnail' do
+    expect(receipt.thumbnail).to eq('http://res.cloudinary.com/dpquc2ssm/image/upload/w_250,h_250,c_fit/v1486788807/x7w8cbcnj1eyz1nhnupf.jpeg')
   end
 
   context 'when a PDF' do
     let(:json) { { url: 'http://res.cloudinary.com/dpquc2ssm/image/upload/v1486788807/x7w8cbcnj1eyz1nhnupf.pdf' } }
     let(:receipt) { Receipt.new(request_item: request_item, cloudinary_json: json) }
 
-    it 'has a valid url' do
-      expect(receipt.url).to eq('')
+    it 'has a valid #url' do
+      expect(receipt.url).to eq('http://res.cloudinary.com/dpquc2ssm/image/upload/v1486788807/x7w8cbcnj1eyz1nhnupf.jpeg')
     end
 
-    it 'has a valid thumbnail' do
-      expect(receipt.thumbnail).to eq('')
+    it 'has a valid #thumbnail' do
+      expect(receipt.thumbnail).to eq('http://res.cloudinary.com/dpquc2ssm/image/upload/w_250,h_250,c_fit/v1486788807/x7w8cbcnj1eyz1nhnupf.jpeg')
     end
   end
 end
