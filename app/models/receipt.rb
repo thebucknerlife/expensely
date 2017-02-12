@@ -10,7 +10,7 @@ class Receipt < ApplicationRecord
     if pdf?
       pdf_to_image
     else
-      cloudinary_json['url']
+      cloudinary_json['url'].dup
     end
   end
 

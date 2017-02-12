@@ -1,3 +1,7 @@
+.image__link-wrapper {
+  cursor: pointer;
+}
+
 .image__container {
   background-color: #ccc;
   height: 100%;
@@ -7,7 +11,8 @@
 
 .image__frame {
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   height: 100%;
   width: 100%;
 }

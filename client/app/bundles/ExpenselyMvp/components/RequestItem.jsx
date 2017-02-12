@@ -12,7 +12,6 @@ const RequestItem = ({index, update, submittable, ...props}) => {
   // todo: add support for float in number field, setup default value
 
   const fieldNodes = fields.map(({ title, name, type }) => {
-    console.log(props);
     if(!submittable) return (
       <li className={"request-item__input-group"}>
         <label>{title}</label>
@@ -61,7 +60,8 @@ const RequestItem = ({index, update, submittable, ...props}) => {
     <div className={"request-item"}>
       <div className={"request-item__image-container"}>
         <Image
-          src={get(props, "receipt.url")}
+          src={get(props, "receipt.thumbnail")}
+          file={get(props, "receipt.original_url")}
           loadingPreview={props.preview}
         />
       </div>
