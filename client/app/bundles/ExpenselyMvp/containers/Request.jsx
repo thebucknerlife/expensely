@@ -5,7 +5,7 @@ import FileDropzone from '../components/FileDropzone';
 import upload from '../utils/upload';
 import api from '../utils/api';
 import { findIndex } from 'lodash';
-const pdfPlaceholderUrl = require('assets/pdf_placeholder.png');
+const pdfPlaceholderUrl = require('assets/pdf_placeholder.svg');
 
 export default class Request extends React.Component {
   constructor(props, _railsContext) {
@@ -25,7 +25,7 @@ export default class Request extends React.Component {
         this.newRequestItem({
           receiptId,
           description: file.name,
-          preview: file.type == 'application/pdf' ? pdfPlaceholderUrl : file.preview,
+          preview: file.type == 'application/pdf' ? ('/assets' + pdfPlaceholderUrl) : file.preview,
         })
         upload(file, resp.data).then((resp) => {
           let index = findIndex(this.state.request.requestItems, ['receiptId', receiptId])

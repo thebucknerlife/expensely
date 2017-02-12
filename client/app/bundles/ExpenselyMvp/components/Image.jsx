@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-const spinnerUrl = require('assets/rolling2.svg');
+const spinnerUrl = require('assets/rolling.svg');
 
 const Image = ({ src, loadingPreview, file }) => {
   const srcUrl = (src || loadingPreview);
