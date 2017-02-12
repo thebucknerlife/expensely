@@ -11,7 +11,7 @@ class ReceiptsController < ApplicationController
    if receipt
     response = Cloudinary::Uploader.upload(params[:file], cloudinary_config)
     receipt.update(cloudinary_json: response)
-    render json: receipt.as_json(only: [:id], methods: [:url, :thumbnail, :original_url])
+    render json: receipt.as_json(only: [:id], methods: [:url, :thumbnail_url, :accountant_url, :original_url])
    else
     render status: 400, head: :no_content
    end

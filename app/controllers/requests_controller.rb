@@ -38,7 +38,7 @@ class RequestsController < ApplicationController
     {
       except: except, include: {
         request_items: { except: except, include: {
-          receipt: { only: [:id], methods: [:url, :thumbnail, :original_url] } }
+          receipt: { only: [:id], methods: [:url, :thumbnail_url, :accountant_url, :original_url] } }
         }
       }
     }

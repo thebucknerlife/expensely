@@ -60,8 +60,8 @@ const RequestItem = ({index, update, submittable, ...props}) => {
     <div className={"request-item"}>
       <div className={"request-item__image-container"}>
         <Image
-          src={get(props, "receipt.thumbnail")}
-          file={get(props, "receipt.original_url")}
+          src={get(props, "receipt.thumbnailUrl")}
+          file={get(props, "receipt.accountantUrl")}
           loadingPreview={props.preview}
         />
       </div>

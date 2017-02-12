@@ -22,7 +22,14 @@ class Receipt < ApplicationRecord
     original_url.gsub(/\.pdf$/,".jpeg")
   end
 
-  def thumbnail
+  def accountant_url
+    @accountant_url ||= begin
+      insert_pos = url.index(/\/upload/)+7
+      url.insert(insert_pos, '/w_1000,h_1000,c_limit')
+    end
+  end
+
+  def thumbnail_url
     @thumbnail ||= begin
       insert_pos = url.index(/\/upload/)+7
       url.insert(insert_pos, '/w_250,h_250,c_fit')

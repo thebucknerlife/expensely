@@ -27,7 +27,11 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
       <form onSubmit={handleSave}>
         <FileDropzone onDrop={onDrop} submittable={!request.submittedAt}/>
         <div className={"form-group"} >
-          <RequestName submittable={!request.submittedAt} request={request} />
+          <RequestName
+            submittable={!request.submittedAt}
+            request={request}
+            updateRequest={updateRequest}
+          />
         </div>
         { requestItemNodes }
         <Submit
@@ -78,8 +82,7 @@ function Submit({ submittable, handleSave, handleSubmit, dirty }) {
   );
 }
 
-function RequestName({ submittable, request }) {
-  console.log(request);
+function RequestName({ submittable, request, updateRequest }) {
   if (submittable) {
     return (
       <input

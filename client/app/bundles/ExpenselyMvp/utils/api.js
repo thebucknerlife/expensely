@@ -9,16 +9,8 @@ function request(url, method, data, params) {
     method,
     data,
     params,
-    transformRequest: [
-      (data) => {
-        return qs.stringify(deepSnakeCaseKeys(data));
-      },
-    ],
-    transformResponse: [
-      (data) => {
-        return deepCamelCaseKeys(JSON.parse(data));
-      },
-    ]
+    transformRequest: [ transformRequest ],
+    transformResponse: [ transformResponse ],
   })
 }
 
@@ -31,7 +23,15 @@ function post(url, data={}, params = {}) {
 }
 
 function patchFile(url, data, params = {}) {
-  return axios.request({ url, method: 'patch', data, params })
+  return axios.request({ url, method: 'patch', data, params, transformResponse: [ transformResponse ] })
+}
+
+function transformRequest(data) {
+  return qs.stringify(deepSnakeCaseKeys(data));
+}
+
+function transformResponse(data) {
+  return deepCamelCaseKeys(JSON.parse(data));
 }
 
 export default {
