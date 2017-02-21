@@ -1,5 +1,9 @@
+.landing:first-child {
+  margin-top: 35%;
+}
+
 section {
-  margin: 40px auto;
+  margin: 20px auto;
   display: flex;
   justify-content: center;
 }
@@ -11,13 +15,23 @@ section {
 
   h1, h2, h3 {
     margin: 0 auto;
+    font-weight: 200;
+  }
+
+  h1 {
+    font-size: 60px;
+  }
+
+  h2 {
+    font-size: 34px;
   }
 }
 
 .logo__icon {
-  height: 100px;
-  left: -80px;
+  height: 200px;
+  left: -170px;
   position: absolute;
+  top: -60px;
 }
 
 .logo__left {
