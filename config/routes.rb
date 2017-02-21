@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root to: 'pages#homepage'
+  root to: 'pages#landing'
+
+  get '/welcome' => 'pages#homepage'
   get '/install' => 'pages#add_to_slack'
 
   get '/auth/slack' => 'auth#slack', as: :auth

@@ -1,0 +1,57 @@
+section {
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  margin: 50px auto;
+  display: flex;
+  position: relative;
+
+  h1, h2, h3 {
+    margin: 0 auto;
+  }
+}
+
+.logo__icon {
+  height: 100px;
+  left: -80px;
+  position: absolute;
+}
+
+.logo__left {
+  margin-right: 20px;
+}
+
+.logo__upper, .logo__lower {
+  display: flex;
+}
+
+.logo__upper {
+  height: 50px;
+  align-items: flex-end;
+}
+
+.logo__lower {
+  height: 20px;
+  align-items: flex-start;
+}
+
+.byline {
+  font-size: 12px;
+  text-align: right;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.subscribe__email {
+  @extend .form-control;
+  width: 400px;
+  margin-right: 20px;
+}
+
+.subscribe__submit {
+  @extend .btn;
+  color: white;
+}

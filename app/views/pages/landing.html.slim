@@ -1,0 +1,19 @@
+.landing
+  section
+    .logo style="color: #{@landing_colors[:color]};"
+      .logo__left
+        = image_tag "nick", class: 'logo__icon'
+        .logo__upper
+          h1 expensely:
+        .logo__lower
+          .byline
+            | by thirtytoship.io
+      .logo__right
+        .logo__upper
+          h2 
+            span the
+            |  way to handle expenses
+        .logo__lower
+  section
+    input type="text" class="subscribe__email" placeholder="your@email.com"
+    input type="submit" class="subscribe__submit" style="background-color: #{@landing_colors[:btn]};"
