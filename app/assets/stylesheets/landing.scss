@@ -1,5 +1,7 @@
-.landing:first-child {
-  margin-top: 35%;
+.landing {
+  position: fixed;
+  top: calc(50% - 138px);
+  left: calc(50% - 350px);
 }
 
 section {
@@ -60,12 +62,20 @@ section {
 }
 
 .subscribe__email {
-  @extend .form-control;
+  @extend .form-control, .input-lg;
   width: 400px;
   margin-right: 20px;
+  float: left;
 }
 
 .subscribe__submit {
-  @extend .btn;
+  @extend .btn, .btn-lg;
+  color: white;
+  float: left;
+}
+
+.flash-message {
+  font-size: 18px;
+  text-align: center;
   color: white;
 }
