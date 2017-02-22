@@ -1,4 +1,6 @@
 class SignupsController < ApplicationController
+  before_action :ensure_present
+  before_action :ensure_valid
 
   def create
     signup = Signup.find_or_initialize_by(signup_params)
@@ -16,6 +18,14 @@ class SignupsController < ApplicationController
   end
 
   private
+
+  def ensure_present
+    render js: flash_message("Please enter an email, silly!") unless signup_params[:email].present?
+  end
+
+  def ensure_valid
+    render js: flash_message("Please enter a valid address! lol") unless /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.match(signup_params[:email])
+  end
 
   def signup_params
     params.require(:signup).permit(:email)
