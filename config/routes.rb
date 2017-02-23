@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get '/auth/success' => 'auth#success', as: :success
   get '/auth/sad' => 'auth#failed', as: :failed
 
-  resources :requests, only: [:show, :update]
+  resources :requests, only: [:show, :index, :update] do
+    collection do
+      get :download
+    end
+  end
   resources :request_items, only: [:create, :update]
   resources :receipts, only: [:create, :update]
   resources :signups, only: [:create]

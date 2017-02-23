@@ -15,6 +15,8 @@ gem "celluloid-io"
 gem 'carrierwave', '~> 1.0'
 gem 'cloudinary'
 gem 'slim'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

@@ -1,11 +1,16 @@
 require("#{Rails.root}/bots/expensely/utils/bot_client")
 
 class RequestsController < ApplicationController
-  before_action :get_request
-  before_action :verify_token
+  before_action :get_request, only: [:show, :update]
+  before_action :verify_token, only: [:show, :update]
 
   def show
     @request_props = @request.as_json(json_format)
+  end
+
+  def index
+    @requests = Request.includes(:request_items).all
+    render layout: "pdf"
   end
 
   def update
@@ -13,6 +18,16 @@ class RequestsController < ApplicationController
     send_congrats if @request.submitted?
 
     render json: @request.as_json(json_format)
+  end
+
+  def download
+    @requests = Request.includes(:request_items).all
+    html = render_to_string(:action => :index, :layout => "pdf")
+    pdf = WickedPdf.new.pdf_from_string(html)
+
+    send_data(pdf,
+              :filename => "my_pdf_name.pdf",
+              :disposition => 'attachment')
   end
 
   private
