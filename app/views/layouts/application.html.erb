@@ -11,9 +11,29 @@
   <body>
     <nav class="navbar navbar-default">
       <div class='container'>
-        <h1>Expensely</h1>
+        <div class="navbar__container">
+          <div class="navbar--left">
+            <%= image_tag "nick.png" %>
+            <h1>expensely</h1>
+            <ul class="navbar__links">
+              <li class="navbar__link">Product</li>
+              <li class="navbar__link">Pricing</li>
+              <li class="navbar__link">FAQ</li>
+            </ul>
+          </div>
+          <div class="navbar--right">
+            <ul class="navbar__links">
+              <li class="navbar__link">Get Started</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </nav>
+    <div class='navbar-gutter'>
+      <div class='container'>
+        <span class="tagline">by thirtytoship</span>
+      </div>
+    </div>
     <div class='container'>
       <%= yield %>
     </div>

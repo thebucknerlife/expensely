@@ -1,0 +1,27 @@
+.landing
+  section
+    .logo style="color: #{@landing_colors[:color]};"
+      .logo__left
+        = image_tag "nick", class: 'logo__icon'
+        .logo__upper
+          h1 expensely:
+        .logo__lower
+          .byline
+            | by thirtytoship.io
+      .logo__right
+        .logo__upper
+          h2
+            em the
+            |  way to handle expenses
+        .logo__lower
+  section
+    = form_for Signup.new, remote: true do |f|
+      = f.text_field :email,
+          placeholder: 'your@email.com',
+          class: 'subscribe__email'
+      = f.submit 'Submit',
+          class: 'subscribe__submit',
+          style: "background-color: #{@landing_colors[:btn]};"
+    end
+  section
+    span.flash-message

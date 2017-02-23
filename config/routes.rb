@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root to: 'pages#homepage'
+  root to: 'pages#landing'
+
+  get '/welcome' => 'pages#homepage'
   get '/install' => 'pages#add_to_slack'
 
   get '/auth/slack' => 'auth#slack', as: :auth
@@ -9,4 +11,5 @@ Rails.application.routes.draw do
   resources :requests, only: [:show, :update]
   resources :request_items, only: [:create, :update]
   resources :receipts, only: [:create, :update]
+  resources :signups, only: [:create]
 end

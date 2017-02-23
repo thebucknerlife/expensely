@@ -1,0 +1,81 @@
+.landing {
+  position: fixed;
+  top: calc(50% - 138px);
+  left: calc(50% - 350px);
+}
+
+section {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  margin: 50px auto;
+  display: flex;
+  position: relative;
+
+  h1, h2, h3 {
+    margin: 0 auto;
+    font-weight: 200;
+  }
+
+  h1 {
+    font-size: 60px;
+  }
+
+  h2 {
+    font-size: 34px;
+  }
+}
+
+.logo__icon {
+  height: 200px;
+  left: -170px;
+  position: absolute;
+  top: -60px;
+}
+
+.logo__left {
+  margin-right: 20px;
+}
+
+.logo__upper, .logo__lower {
+  display: flex;
+}
+
+.logo__upper {
+  height: 50px;
+  align-items: flex-end;
+}
+
+.logo__lower {
+  height: 20px;
+  align-items: flex-start;
+}
+
+.byline {
+  font-size: 12px;
+  text-align: right;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.subscribe__email {
+  @extend .form-control, .input-lg;
+  width: 400px;
+  margin-right: 20px;
+  float: left;
+}
+
+.subscribe__submit {
+  @extend .btn, .btn-lg;
+  color: white;
+  float: left;
+}
+
+.flash-message {
+  font-size: 18px;
+  text-align: center;
+  color: white;
+}
