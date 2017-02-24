@@ -9,7 +9,7 @@ class RequestsController < ApplicationController
   end
 
   def index
-    @requests = Request.includes(:request_items).all
+    decorate_requests
     render layout: "pdf"
   end
 
@@ -21,12 +21,12 @@ class RequestsController < ApplicationController
   end
 
   def download
-    @requests = Request.includes(:request_items).all
+    decorate_requests
     html = render_to_string(:action => :index, :layout => "pdf")
     pdf = WickedPdf.new.pdf_from_string(html)
 
     send_data(pdf,
-              :filename => "my_pdf_name.pdf",
+              :filename => "requests-#{Time.now.strftime("%m-%e-%y-%H:%M:%S")}.pdf",
               :disposition => 'attachment')
   end
 
@@ -46,6 +46,10 @@ class RequestsController < ApplicationController
 
   def request_params
     params.require(:request).permit(:name, :submitted_at, request_items_attributes: [:id, :description, :category, :amount, :receipt_id, :_destroy])
+  end
+
+  def decorate_requests
+    @decorated = RequestsByUserDecorator.decorate(Request.includes(:user, :request_items).all)
   end
 
   def json_format

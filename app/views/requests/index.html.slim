@@ -1,8 +1,21 @@
-table.requests
-  thead
-    tr
-      th name
-  tbody
-    - @requests.each do |request|
+- @decorated.each do |user|
+  h3 = user.name
+  table.table
+    thead
       tr
-        td = request.name
+        th description
+        th amount
+    tbody
+      - user.categories.each do |category|
+        tr
+          td: em = category.name
+        - category.request_items.each do |ri|
+          tr
+            td = ri.description
+            td = number_to_currency(ri.amount/100.0)
+        tr
+          td: strong SUBTOTAL
+          td: strong = number_to_currency(category.sum/100.0)
+      tr
+        td: strong: em TOTAL
+        td: strong: em = number_to_currency(user.sum/100.0)
