@@ -47,7 +47,7 @@ class RequestsController < ApplicationController
   end
 
   def request_params
-    params.require(:request).permit(:name, :submitted_at, request_items_attributes: [:id, :description, :category, :amount, :receipt_id, :_destroy])
+    params.require(:request).permit(:name, :submitted_at, request_items_attributes: [:id, :description, :category, :amount, :receipt_id, :paid_at, :_destroy])
   end
 
   def decorate_requests

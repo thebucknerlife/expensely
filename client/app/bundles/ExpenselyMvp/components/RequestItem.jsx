@@ -1,12 +1,17 @@
 import React, { PropTypes } from "react";
 import { get, find } from "lodash";
 import Image from './Image';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+
+require('react-datepicker/dist/react-datepicker.css');
 
 const RequestItem = ({index, update, submittable, ...props}) => {
   const fields = [
     { title: "Description", name: "description", type: "text" },
     { title: "Category", name: "category", type: "dropdown" },
     { title: "Amount", name: "amount", type: "money" },
+    { title: "Date", name: "paidAt", type: "date" },
   ]
 
   // todo: add support for float in number field, setup default value
@@ -30,7 +35,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
           name={name}
           { ...props }
         />
-      )
+      );
     } else if (type === 'money') {
       return (
         <MoneyInput
@@ -41,7 +46,25 @@ const RequestItem = ({index, update, submittable, ...props}) => {
           name={name}
           { ...props }
         />
-      )
+      );
+    } else if (type === 'date'){
+      let date = moment(props[name]);
+      console.log(name, props, props[name]);
+      if (!date.isValid()) { date = null } 
+
+      return(
+        <li key={name} className={"request-item__input-group"} >
+          <label>{title}</label>
+          <DatePicker
+            key={name}
+            className={"request-item__input"}
+            selected={date}
+            onChange={(date) => {
+              update({ [name]: date.format('DD/MM/YYYY') }, index)
+            }}
+          />
+        </li>
+      );
     } else {
       return (
         <BasicInput
@@ -52,7 +75,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
           name={name}
           { ...props }
         />
-      )
+      );
     }
   })
 

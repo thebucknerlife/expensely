@@ -11,6 +11,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
         description={requestItem.description}
         amount={requestItem.amount}
         category={requestItem.category}
+        paidAt={requestItem.paidAt}
         preview={requestItem.preview}
         receipt={requestItem.receipt}
         key={index}

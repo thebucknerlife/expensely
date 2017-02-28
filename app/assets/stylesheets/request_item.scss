@@ -39,5 +39,9 @@ $margin-left: 40px;
 .request-item__input-group {
   @extend .form-group;
   list-style-type: none;
+
+  label {
+    display: block;
+  }
 }
 

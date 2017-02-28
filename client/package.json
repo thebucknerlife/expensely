@@ -35,7 +35,9 @@
     "immutability-helper": "^2.1.1",
     "imports-loader": "^0.7.0",
     "lodash": "^4.17.4",
+    "moment": "^2.17.1",
     "react": "^15.4.1",
+    "react-datepicker": "^0.41.1",
     "react-dom": "^15.4.1",
     "react-dropzone": "^3.8.0",
     "react-on-rails": "6.3.5",
@@ -43,5 +45,8 @@
     "snakecase-keys": "^1.1.0",
     "webpack": "^1.14.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "css-loader": "^0.26.2",
+    "style-loader": "^0.13.2"
+  }
 }

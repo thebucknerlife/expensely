@@ -8,6 +8,6 @@ class RequestItemsController < ApplicationController
   private
 
   def request_item_params
-    params.require(:request_item).permit(:description, :type, :amount, :request_id)
+    params.require(:request_item).permit(:description, :type, :amount, :request_id, :paid_at)
   end
 end
