@@ -1,0 +1,9 @@
+.date-input__suggestions {
+  color: gray;
+  font-size: 12px;
+}
+.date-input__suggestion-date {
+  @extend .btn-link;
+  padding: 0;
+  margin: 0;
+}

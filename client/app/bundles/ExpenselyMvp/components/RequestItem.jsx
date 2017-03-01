@@ -1,10 +1,7 @@
 import React, { PropTypes } from "react";
 import { get, find } from "lodash";
 import Image from './Image';
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
-
-require('react-datepicker/dist/react-datepicker.css');
+import DateInput from './DateInput';
 
 const RequestItem = ({index, update, submittable, ...props}) => {
   const fields = [
@@ -48,20 +45,15 @@ const RequestItem = ({index, update, submittable, ...props}) => {
         />
       );
     } else if (type === 'date'){
-      let date = moment(props[name]);
-      console.log(name, props, props[name]);
-      if (!date.isValid()) { date = null } 
-
       return(
         <li key={name} className={"request-item__input-group"} >
           <label>{title}</label>
-          <DatePicker
-            key={name}
-            className={"request-item__input"}
-            selected={date}
-            onChange={(date) => {
-              update({ [name]: date.format('DD/MM/YYYY') }, index)
-            }}
+          <DateInput
+            name={name}
+            initialValue={props[name]}
+            update={update}
+            index={index}
+            suggestions={props.suggestions.paidAt}
           />
         </li>
       );

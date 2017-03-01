@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import RequestItem from './RequestItem';
 import FileDropzone from './FileDropzone';
+import { union, compact } from 'lodash';
 
-const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop}) => {
-
+export default function RequestForm({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop})  {
+  const suggestions = handleSuggestions(request);
   const requestItemNodes = request.requestItems.map((requestItem, index) => {
     if (requestItem._destroy) return null;
 
@@ -19,6 +20,7 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
         update={updateRequestItem}
         delete={deleteRequestItem}
         submittable={!request.submittedAt}
+        suggestions={suggestions}
       />
     );
   });
@@ -50,8 +52,6 @@ const RequestForm = ({updateRequest, request, updateRequestItem, deleteRequestIt
 Request.propTypes = {
   request: PropTypes.object,
 };
-
-export default RequestForm;
 
 function DirtyNotice({ dirty }) {
   if (dirty) {
@@ -99,4 +99,14 @@ function RequestName({ submittable, request, updateRequest }) {
   } else {
     return <h3>{request.name}</h3>
   }
+}
+
+function handleSuggestions(request) {
+  let suggestions = { paidAt: [] };
+  request.requestItems.reduce((sug, item) => {
+    sug['paidAt'] = compact(union(sug['paidAt'], [item.paidAt]));
+    return sug;
+  }, suggestions);
+  console.log('**suggestions', suggestions);
+  return suggestions;
 }

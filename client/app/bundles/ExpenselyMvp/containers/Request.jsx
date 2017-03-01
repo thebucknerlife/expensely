@@ -13,7 +13,7 @@ export default class Request extends React.Component {
     this.state = {
       request: props.request,
       formDirty: false,
-      token: props.token
+      token: props.token,
     };
   }
 
@@ -100,3 +100,4 @@ export default class Request extends React.Component {
 Request.propTypes = {
   requestItems: PropTypes.array,
 };
+
