@@ -160,6 +160,7 @@ function Dropdown({ name, title, update, index, ...props}) {
         onChange={(e) => {
           update({ [name]: e.target.value }, index)
         }}
+        required
       >
         { optionNodes }
       </select>
