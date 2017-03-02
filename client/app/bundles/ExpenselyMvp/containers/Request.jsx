@@ -57,10 +57,8 @@ export default class Request extends React.Component {
     this.updateRequestItem({'_destroy': true}, index);
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
-    api.requests.update(newAttrs, this.state.token)
+  apiUpdate = (attrs) => {
+    api.requests.update(attrs, this.state.token)
       .then((response) => {
         Object.assign(this.state.request, response.data)
         this.state.formDirty = false;
@@ -68,14 +66,15 @@ export default class Request extends React.Component {
       });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
+    this.apiUpdate(newAttrs);
+  }
+
   handleSave = (e) => {
     e.preventDefault();
-    api.requests.update(this.state.request, this.state.token)
-      .then((response) => {
-        Object.assign(this.state.request, response.data)
-        this.state.formDirty = false;
-        this.setState(this.state);
-      });
+    this.apiUpdate(this.state.request);
   }
 
   render() {
