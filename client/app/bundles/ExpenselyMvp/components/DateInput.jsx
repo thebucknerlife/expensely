@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { get, find, without } from "lodash";
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-require('react-datepicker/dist/react-datepicker.css');
+//import 'react-datepicker-css';
 
 const railsFormat = 'YYYY-MM-DD';
 const displayFormat = "MM/DD/YY";

@@ -27,6 +27,7 @@ const config = {
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
+      //'react-datepicker-css': path.resolve('./node_modules/react-datepicker/dist/react-datepicker.css'),
       'assets': path.resolve('./app/assets'),
     },
   },
