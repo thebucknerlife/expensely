@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228061240) do
+ActiveRecord::Schema.define(version: 20170310064756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "batch_requests", force: :cascade do |t|
+    t.integer  "batch_id"
+    t.integer  "request_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["batch_id"], name: "index_batch_requests_on_batch_id", using: :btree
+    t.index ["request_id"], name: "index_batch_requests_on_request_id", using: :btree
+  end
+
+  create_table "batches", force: :cascade do |t|
+    t.string   "slug"
+    t.integer  "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "receipts", force: :cascade do |t|
     t.integer  "request_item_id"
@@ -42,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170228061240) do
     t.string   "name"
     t.datetime "submitted_at"
     t.string   "token"
+    t.datetime "delivered_at"
     t.index ["user_id"], name: "index_requests_on_user_id", using: :btree
   end
 
@@ -72,6 +89,8 @@ ActiveRecord::Schema.define(version: 20170228061240) do
     t.integer  "team_id"
   end
 
+  add_foreign_key "batch_requests", "batches"
+  add_foreign_key "batch_requests", "requests"
   add_foreign_key "request_items", "requests"
   add_foreign_key "requests", "users"
 end

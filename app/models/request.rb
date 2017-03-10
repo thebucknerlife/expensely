@@ -7,8 +7,10 @@ class Request < ApplicationRecord
   accepts_nested_attributes_for :request_items, allow_destroy: true
 
   scope :in_progress, -> { where(submitted_at: nil) }
-  scope :submitted, -> { where('submitted_at >= ?', 10.days.ago) }
-  scope :approved, -> { where('submitted_at < ?', 10.days.ago) }
+  scope :submitted, -> { where.not(submitted_at: nil) }
+  scope :undelivered, -> { where(delivered_at: nil) }
+  scope :delivered, -> { where.not(delivered_at: nil) }
+  scope :approved, -> { where('delivered_at < ?', 5.days.ago) }
 
 
   def new_request_url
