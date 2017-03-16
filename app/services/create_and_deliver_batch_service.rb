@@ -7,12 +7,13 @@ class CreateAndDeliverBatchService
   end
 
   def run(team:, requests:)
-    batch = Batch.new(team: team, requests: requests.includes(:user, :request_items))
+    batch = Batch.new(team: team, requests: requests)
     return deliver_no_requests_email(team) unless batch.requests.any?
     zip_url = create_zip(batch)
     pdf = create_pdf_file(batch)
     pdf_url = upload_and_record_pdf(pdf, batch)
     deliver_batch_email(zip_url, pdf_url, batch)
+    #batch.requested.update_all(delivered_at: Time.now)
   end
 
   private
