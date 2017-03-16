@@ -1,5 +1,9 @@
 # README
 
+```
+Receipt.all.each{ |r| r.update(filename: File.basename(r.cloudinary_json['url'])) if r.cloudinary_json['url'] }
+```
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

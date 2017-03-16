@@ -9,8 +9,9 @@ class ReceiptsController < ApplicationController
    receipt = Receipt.find_by(id: params[:id])
 
    if receipt
-    response = Cloudinary::Uploader.upload(params[:file], cloudinary_config)
-    receipt.update(cloudinary_json: response)
+    response = Cloudinary::Uploader.upload(params[:file], cloudinary_config.merge(public_id: receipt.cloudinary_public_id))
+    filename = "#{response['public_id']}.#{response['format']}"
+    receipt.update(cloudinary_json: response, filename: filename)
     render json: receipt.as_json(only: [:id], methods: [:url, :thumbnail_url, :accountant_url, :original_url])
    else
     render status: 400, head: :no_content

@@ -13,7 +13,7 @@
         - category.request_items.each do |ri|
           tr
             td = ri.description
-            td cool
+            td = ri.receipt.filename
             td = number_to_currency(ri.amount/100.0)
         tr
           td(colspan=2): strong: Subtotal
