@@ -2,20 +2,22 @@
   h3 = user.name
   table.table
     thead
-      tr
-        th description
-        th amount
+      tr.dark
+        th Description
+        th Filename
+        th Amount
     tbody
       - user.categories.each do |category|
         tr
-          td: em = category.name
+          td.table__sub-header colspan=3 = category.name.titleize
         - category.request_items.each do |ri|
           tr
             td = ri.description
+            td cool
             td = number_to_currency(ri.amount/100.0)
         tr
-          td: strong SUBTOTAL
+          td(colspan=2): strong: Subtotal
           td: strong = number_to_currency(category.sum/100.0)
       tr
-        td: strong: em TOTAL
+        td(colspan=2): strong: em Total
         td: strong: em = number_to_currency(user.sum/100.0)
