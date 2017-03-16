@@ -61,10 +61,10 @@ class CreateAndDeliverBatchService
   end
 
   def deliver_batch_email(zip_url, pdf_url, batch)
-    mailer.requests_batch_email(zip_url, pdf_url, batch)
+    mailer.requests_batch_email(zip_url, pdf_url, batch).deliver_now
   end
 
   def deliver_no_requests_email(team)
-    mailer.no_requests_email(team)
+    mailer.no_requests_email(team).deliver_now
   end
 end
