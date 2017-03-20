@@ -66,10 +66,18 @@ export default class Request extends React.Component {
       });
   }
 
+  validateForm = (attrs) => {
+    console.log(attrs);
+    return {};
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     let newAttrs = Object.assign(this.state.request, { submittedAt: new Date().toISOString() });
-    this.apiUpdate(newAttrs);
+    const errors = this.validateForm(newAttrs);
+    if (Object.keys(errors).length === 0) {
+      //this.apiUpdate(newAttrs);
+    }
   }
 
   handleSave = (e) => {
