@@ -13,7 +13,7 @@ class CreateAndDeliverBatchService
     pdf = create_pdf_file(batch)
     pdf_url = upload_and_record_pdf(pdf, batch)
     deliver_batch_email(zip_url, pdf_url, batch)
-    #batch.requested.update_all(delivered_at: Time.now)
+    batch.requests.update_all(delivered_at: Time.now)
   end
 
   private

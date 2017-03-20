@@ -7,7 +7,7 @@ namespace :batch do
     Team.all.each do |team|
       CreateAndDeliverBatchService.new.run(
         team: team,
-        requests: team.requests.includes(:user, request_items: :receipt)
+        requests: team.requests.submitted.undelivered.includes(:user, request_items: :receipt)
       )
     end
   end
