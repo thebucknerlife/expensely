@@ -10,10 +10,6 @@ const displayFormat = "MM/DD/YY";
 export default function DateInput({ name, initialValue, update, index, suggestions }) {
   let date = moment(initialValue, railsFormat);
 
-  console.log('DateInput initialValue', initialValue);
-  console.log('DateInput date', date);
-  console.log('DateInput suggestions', suggestions);
-
   if (!date.isValid()) {
     date = null;
   }

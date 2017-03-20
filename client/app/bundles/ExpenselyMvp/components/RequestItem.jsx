@@ -4,6 +4,7 @@ import Image from './Image';
 import DateInput from './DateInput';
 
 const RequestItem = ({index, update, submittable, ...props}) => {
+  let inputNode;
   const fields = [
     { title: "Description", name: "description", type: "text" },
     { title: "Category", name: "category", type: "dropdown" },
@@ -14,16 +15,10 @@ const RequestItem = ({index, update, submittable, ...props}) => {
   // todo: add support for float in number field, setup default value
 
   const fieldNodes = fields.map(({ title, name, type }) => {
-    if(!submittable) return (
-      <li className={"request-item__input-group"}>
-        <label>{title}</label>
-        <p>{props[name]}</p>
-      </li>
-    )
-
-
-    if (type === 'dropdown') {
-      return (
+    if (!submittable) {
+      inputNode = (<p>{props[name]}</p>);
+    } else if (type === 'dropdown') {
+      inputNode = (
         <Dropdown
           index={index}
           key={name}
@@ -34,7 +29,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
         />
       );
     } else if (type === 'money') {
-      return (
+      inputNode = (
         <MoneyInput
           index={index}
           key={name}
@@ -45,20 +40,17 @@ const RequestItem = ({index, update, submittable, ...props}) => {
         />
       );
     } else if (type === 'date'){
-      return(
-        <li key={name} className={"request-item__input-group"} >
-          <label>{title}</label>
-          <DateInput
-            name={name}
-            initialValue={props[name]}
-            update={update}
-            index={index}
-            suggestions={props.suggestions.paidAt}
-          />
-        </li>
+      inputNode =(
+        <DateInput
+          name={name}
+          initialValue={props[name]}
+          update={update}
+          index={index}
+          suggestions={props.suggestions.paidAt}
+        />
       );
     } else {
-      return (
+      inputNode = (
         <BasicInput
           index={index}
           key={name}
@@ -69,6 +61,13 @@ const RequestItem = ({index, update, submittable, ...props}) => {
         />
       );
     }
+
+    return (
+      <li className={"request-item__input-group"}>
+        <label>{title}</label>
+        { inputNode }
+      </li>
+    )
   })
 
   return (
@@ -111,40 +110,33 @@ function MoneyInput({ name, title, type, update, index, ...props}) {
   let value = props[name] / 100;
 
   return (
-    <li className={"request-item__input-group"}>
-      <label>{title}</label>
-      <input
-        className={"request-item__input"}
-        type={"number"}
-        placeholder={title}
-        value={value}
-        onChange={(e) => {
-          update({ [name]: (e.target.value * 100) }, index)
-        }}
-      />
-    </li>
+    <input
+      className={"request-item__input"}
+      type={"number"}
+      placeholder={title}
+      value={value}
+      onChange={(e) => {
+        update({ [name]: (e.target.value * 100) }, index)
+      }}
+    />
   )
 }
 
 function BasicInput({ name, title, type, update, index, ...props}) {
   return (
-    <li className={"request-item__input-group"}>
-      <label>{title}</label>
-      <input
-        className={"request-item__input"}
-        type={"text"}
-        placeholder={title}
-        value={props[name]}
-        onChange={(e) => {
-          update({ [name]: e.target.value }, index)
-        }}
-      />
-    </li>
+    <input
+      className={"request-item__input"}
+      type={"text"}
+      placeholder={title}
+      value={props[name]}
+      onChange={(e) => {
+        update({ [name]: e.target.value }, index)
+      }}
+    />
   )
 }
 
 function Dropdown({ name, title, update, index, ...props}) {
-
   let optionNodes = options().map(({ name, value }) => {
     return (
       <option value={value} key={value}>{name}</option>
@@ -152,19 +144,16 @@ function Dropdown({ name, title, update, index, ...props}) {
   })
 
   return (
-    <li className={"request-item__input-group"}>
-      <label>{title}</label>
-      <select
-        className={"request-item__input"}
-        value={props[name]}
-        onChange={(e) => {
-          update({ [name]: e.target.value }, index)
-        }}
-        required
-      >
-        { optionNodes }
-      </select>
-    </li>
+    <select
+      className={"request-item__input"}
+      value={props[name]}
+      onChange={(e) => {
+        update({ [name]: e.target.value }, index)
+      }}
+      required
+    >
+      { optionNodes }
+    </select>
   )
 }
 
