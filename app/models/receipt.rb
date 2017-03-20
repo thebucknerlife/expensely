@@ -4,7 +4,7 @@ class Receipt < ApplicationRecord
   after_initialize :generate_cloudinary_public_id
 
   def generate_cloudinary_public_id
-    self.cloudinary_public_id = loop do
+    self.cloudinary_public_id ||= loop do
       rand = sprintf('%06d', rand(1..999999))
       public_id = "#{tree_names.sample}-#{rand}"
       break public_id unless Receipt.exists?(cloudinary_public_id: public_id)
