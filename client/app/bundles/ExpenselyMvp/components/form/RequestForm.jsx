@@ -3,14 +3,15 @@ import RequestItem from '../RequestItem';
 import FileDropzone from '../FileDropzone';
 import RequestName from './RequestName';
 import Submit from './Submit';
-import { reqAttrsToFormAttrs } from '../../utils/formHelpers';
+import { reqAttrsToFormAttrs, invalidate } from '../../utils/formHelpers';
 import { reqSugs } from '../../utils/suggestionsHelpers';
 
 export default function RequestForm({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop})  {
   const suggestions = reqSugs(request);
 
   const formAttrs = reqAttrsToFormAttrs(request);
-  console.log(formAttrs);
+  const v = invalidate(formAttrs);
+  console.log('formAttrs', formAttrs, 'v', v);
 
   const requestItemNodes = formAttrs.requestItems.map((requestItem, index) => {
     if (requestItem._destroy) return null;
