@@ -1,74 +1,27 @@
 import React, { PropTypes } from "react";
+import classnames from 'classnames';
 import { get, find } from "lodash";
 import Image from './Image';
 import DateInput from './DateInput';
 
 const RequestItem = ({index, update, submittable, ...props}) => {
-  let inputNode;
-  const fields = [
-    { title: "Description", name: "description", type: "text" },
-    { title: "Category", name: "category", type: "dropdown" },
-    { title: "Amount", name: "amount", type: "money" },
-    { title: "Date", name: "paidAt", type: "date" },
-  ]
+  let fieldNodes;
 
-  // todo: add support for float in number field, setup default value
-
-  const fieldNodes = fields.map(({ title, name, type }) => {
-    if (!submittable) {
-      inputNode = (<p>{props[name]}</p>);
-    } else if (type === 'dropdown') {
-      inputNode = (
-        <Dropdown
-          index={index}
-          key={name}
-          update={update}
-          title={title}
-          name={name}
-          { ...props }
-        />
-      );
-    } else if (type === 'money') {
-      inputNode = (
-        <MoneyInput
-          index={index}
-          key={name}
-          update={update}
-          title={title}
-          name={name}
-          { ...props }
-        />
-      );
-    } else if (type === 'date'){
-      inputNode =(
-        <DateInput
-          name={name}
-          initialValue={props[name]}
-          update={update}
-          index={index}
-          suggestions={props.suggestions.paidAt}
-        />
-      );
-    } else {
-      inputNode = (
-        <BasicInput
-          index={index}
-          key={name}
-          update={update}
-          title={title}
-          name={name}
-          { ...props }
-        />
-      );
-    }
-
-    return (
-      <li className={"request-item__input-group"} key={title}>
-        <label>{title}</label>
-        { inputNode }
-      </li>
-    )
-  })
+  if (submittable) {
+    fieldNodes = [
+      <BasicInput index={index} key='description' update={update} title='Description' name='description' val={props.description.val} error={props.description.error}/>,
+      <Dropdown   index={index} key='category'    update={update} title='Category'    name='category'     { ...props } />,
+      <MoneyInput index={index} key='amount'      update={update} title='Amount'      name='amount'       { ...props } />,
+      <DateInput  index={index} initialValue={props['paidAt']} update={update} name='paidAt' suggestions={props.suggestions.paidAt} />,
+    ]
+  } else {
+    fieldNodes = [
+      <p>{props['description']}</p>,
+      <p>{props['category']}</p>,
+      <p>{props['amount']}</p>,
+      <p>{props['paidAt']}</p>,
+    ]
+  }
 
   return (
     <div className={"request-item"}>
@@ -84,7 +37,9 @@ const RequestItem = ({index, update, submittable, ...props}) => {
           <span className={"delete-icon"} onClick={() => { props.delete(index) }}>&#10006;</span>
         </div>
         <ul className={"request-item__inputs"}>
-          { fieldNodes }
+          {
+            fieldNodes.map((node, i) => (<li className={"request-item__li"} key={i}>{ node }</li>))
+          }
         </ul>
       </div>
     </div>
@@ -92,7 +47,10 @@ const RequestItem = ({index, update, submittable, ...props}) => {
 }
 
 RequestItem.propTypes = {
-  description: PropTypes.string,
+  description: PropTypes.shape({
+    val: PropTypes.string,
+    error: PropTypes.string,
+  }),
   type: PropTypes.string,
   amount: PropTypes.number,
   update: PropTypes.func.isRequired,
@@ -110,6 +68,8 @@ function MoneyInput({ name, title, type, update, index, ...props}) {
   let value = props[name] / 100;
 
   return (
+    <div className="request-item__input-group">
+    <label>{title}</label>
     <input
       className={"request-item__input"}
       type={"number"}
@@ -119,20 +79,26 @@ function MoneyInput({ name, title, type, update, index, ...props}) {
         update({ [name]: (e.target.value * 100) }, index)
       }}
     />
-  )
+    </div>
+  );
 }
 
-function BasicInput({ name, title, type, update, index, ...props}) {
+function BasicInput({ name, title, type, update, index, val, error}) {
+  const wrapperClass = classnames('request-item__input-group', { 'has-error': error });
   return (
-    <input
-      className={"request-item__input"}
-      type={"text"}
-      placeholder={title}
-      value={props[name]}
-      onChange={(e) => {
-        update({ [name]: e.target.value }, index)
-      }}
-    />
+    <div className={wrapperClass}>
+      <label>{title}</label>
+      <input
+        className={"request-item__input"}
+        type={"text"}
+        placeholder={title}
+        value={val}
+        onChange={(e) => {
+          update({ [name]: e.target.value }, index)
+        }}
+      />
+      { error ? (<p className="text-danger">{ error }</p>) : null }
+    </div>
   )
 }
 
@@ -144,17 +110,20 @@ function Dropdown({ name, title, update, index, ...props}) {
   })
 
   return (
-    <select
-      className={"request-item__input"}
-      value={props[name]}
-      onChange={(e) => {
-        update({ [name]: e.target.value }, index)
-      }}
-      required
-    >
-      { optionNodes }
-    </select>
-  )
+    <div className="request-item__input-group">
+      <label>{title}</label>
+      <select
+        className={"request-item__input"}
+        value={props[name]}
+        onChange={(e) => {
+          update({ [name]: e.target.value }, index)
+        }}
+        required
+      >
+        { optionNodes }
+      </select>
+    </div>
+  );
 }
 
 function options() {

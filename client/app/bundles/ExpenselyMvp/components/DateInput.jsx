@@ -21,7 +21,8 @@ export default function DateInput({ name, initialValue, update, index, suggestio
   const otherSuggestions = without(suggestions, initialValue);
 
   return (
-    <div>
+    <div className="request-item__input-group">
+      <label>Date</label>
       <DatePicker
         key={name}
         className={"request-item__input"}

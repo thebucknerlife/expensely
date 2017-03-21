@@ -3,11 +3,16 @@ import RequestItem from '../RequestItem';
 import FileDropzone from '../FileDropzone';
 import RequestName from './RequestName';
 import Submit from './Submit';
-import { union, compact } from 'lodash';
+import { reqAttrsToFormAttrs } from '../../utils/formHelpers';
+import { reqSugs } from '../../utils/suggestionsHelpers';
 
 export default function RequestForm({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop})  {
-  const suggestions = handleSuggestions(request);
-  const requestItemNodes = request.requestItems.map((requestItem, index) => {
+  const suggestions = reqSugs(request);
+
+  const formAttrs = reqAttrsToFormAttrs(request);
+  console.log(formAttrs);
+
+  const requestItemNodes = formAttrs.requestItems.map((requestItem, index) => {
     if (requestItem._destroy) return null;
 
     return (<RequestItem
@@ -50,11 +55,3 @@ Request.propTypes = {
   request: PropTypes.object,
 };
 
-function handleSuggestions(request) {
-  let suggestions = { paidAt: [] };
-  request.requestItems.reduce((sug, item) => {
-    sug['paidAt'] = compact(union(sug['paidAt'], [item.paidAt]));
-    return sug;
-  }, suggestions);
-  return suggestions;
-}
