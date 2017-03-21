@@ -39,7 +39,7 @@ function SuggestedDates({ suggestions, selfDate, _update }) {
 
   return (
     <div className="date-input__suggestions">
-      Suggestions: { suggestions.map((date) => <SuggestedDate date={date} _update={_update} /> ) }
+      Suggestions: { suggestions.map((date) => <SuggestedDate date={date} key={date} _update={_update} /> ) }
     </div>
   );
 }

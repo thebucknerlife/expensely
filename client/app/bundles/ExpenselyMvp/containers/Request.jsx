@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import changeCase from 'change-case';
-import RequestForm from '../components/RequestForm';
+import RequestForm from '../components/form/RequestForm';
 import FileDropzone from '../components/FileDropzone';
 import upload from '../utils/upload';
 import api from '../utils/api';
@@ -35,14 +35,14 @@ export default class Request extends React.Component {
     })
   }
 
-  newRequestItem = (requestItem) => {
-    this.state.request.requestItems.push(requestItem);
+  updateRequest = (newAttrs) => {
+    Object.assign(this.state.request, newAttrs);
     this.state.formDirty = true;
     this.setState(this.state);
   }
 
-  updateRequest = (newAttrs) => {
-    Object.assign(this.state.request, newAttrs);
+  newRequestItem = (requestItem) => {
+    this.state.request.requestItems.push(requestItem);
     this.state.formDirty = true;
     this.setState(this.state);
   }
@@ -67,7 +67,7 @@ export default class Request extends React.Component {
   }
 
   validateForm = (attrs) => {
-    console.log(attrs);
+    console.log('validate', attrs);
     return {};
   }
 

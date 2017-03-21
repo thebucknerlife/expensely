@@ -63,7 +63,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
     }
 
     return (
-      <li className={"request-item__input-group"}>
+      <li className={"request-item__input-group"} key={title}>
         <label>{title}</label>
         { inputNode }
       </li>
