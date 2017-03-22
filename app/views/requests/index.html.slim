@@ -4,20 +4,22 @@
     thead
       tr.dark
         th.table__description Description
+        th.table__date Date
         th.table__filename Filename
         th.table__amount Amount
     tbody
       - user.categories.each do |category|
         tr
-          td.table__sub-header colspan=3 = category.name.titleize
+          td.table__sub-header colspan=4 = category.name.titleize
         - category.request_items.each do |ri|
           tr
             td = ri.description
+            td = ri.paid_at.try(:strftime, '%b %d, %Y')
             td = ri.receipt.filename
             td = number_to_currency(ri.amount/100.0)
         tr
-          td(colspan=2): strong: Subtotal
+          td(colspan=3): strong: Subtotal
           td: strong = number_to_currency(category.sum/100.0)
       tr
-        td(colspan=2): strong: em Total
+        td(colspan=3): strong: em Total
         td: strong: em = number_to_currency(user.sum/100.0)
