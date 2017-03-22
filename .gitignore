@@ -24,3 +24,5 @@ node_modules
 
 #dotenv
 .env
+
+temp.rb
