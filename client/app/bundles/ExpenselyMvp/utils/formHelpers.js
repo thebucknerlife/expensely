@@ -1,11 +1,11 @@
 import { reduce } from 'lodash';
 
-export function reqAttrsToFormAttrs(requestAttrs) {
+export function formDataFromRequest(requestAttrs) {
   let formAttrs = Object.assign({}, requestAttrs);
   const reqItemAttrs = requestAttrs.requestItems.map((item) => {
     return {
       amount:       item.amount,
-      category:     item.category,
+      category:     { val: item.category },
       description:  { val: item.description },
       id:           item.id,
       paidAt:       item.paidAt,
@@ -19,23 +19,43 @@ export function reqAttrsToFormAttrs(requestAttrs) {
   return formAttrs;
 }
 
-export function invalidate(formAttrs) {
-  let invalidAttrs = Object.assign({}, formAttrs);
-
-  invalidAttrs.requestItems.forEach((item) => {
-
-    if (!item.description.val) {
-      console.log('error');
-      item.error = "Cannot be blank";
+export function validateAndSetErrors(formData) {
+  const newReqItems = formData.requestItems.map((item) => {
+    if(!item.description.val) {
+      item.description.error = 'Can not be blank';
     } else {
-      item.error = undefined;
+      item.description.error = undefined;
     }
 
-  });
+    if(item.category.val === 'none') {
+      item.category.error = 'Please select a category';
+    } else {
+      item.category.error = undefined;
+    }
 
-  const isInvalid = reduce(invalidAttrs.requestItems, (item) => {
-    return item.error ? true : false;
-  }, false)
+    //if(!item.amount.val <= 0) {
+      //item.amount.error = 'Must be greater than 0';
+    //} else {
+      //item.amount.error = undefined;
+    //}
 
-  return isInvalid ? invalidAttrs : false;
+    //if(!item.category.val === 'none') {
+      //item.category.error = 'Please select a category';
+    //} else {
+      //item.category.error = undefined;
+    //}
+    return item;
+  })
+
+  return Object.assign(formData, { requestItems: newReqItems });
+}
+
+export function hasErrors(formData) {
+    return reduce(formData.requestItems, (bool, item) => {
+      if(item.description.error || item.category.error || item.amount.error || item.paidAt.error) {
+        return bool || true;
+      } else {
+        return bool || false;
+      }
+    }, false);
 }

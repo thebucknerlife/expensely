@@ -3,17 +3,13 @@ import RequestItem from '../RequestItem';
 import FileDropzone from '../FileDropzone';
 import RequestName from './RequestName';
 import Submit from './Submit';
-import { reqAttrsToFormAttrs, invalidate } from '../../utils/formHelpers';
 import { reqSugs } from '../../utils/suggestionsHelpers';
 
-export default function RequestForm({updateRequest, request, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop})  {
-  const suggestions = reqSugs(request);
+export default function RequestForm({updateRequest, data, updateRequestItem, deleteRequestItem, handleSave, handleSubmit, dirty, onDrop})  {
+  const suggestions = reqSugs(data);
+  const submittable = !data.submittedAt;
 
-  const formAttrs = reqAttrsToFormAttrs(request);
-  const v = invalidate(formAttrs);
-  console.log('formAttrs', formAttrs, 'v', v);
-
-  const requestItemNodes = formAttrs.requestItems.map((requestItem, index) => {
+  const requestItemNodes = data.requestItems.map((requestItem, index) => {
     if (requestItem._destroy) return null;
 
     return (<RequestItem
@@ -21,7 +17,7 @@ export default function RequestForm({updateRequest, request, updateRequestItem, 
         index={index}
         update={updateRequestItem}
         delete={deleteRequestItem}
-        submittable={!request.submittedAt}
+        submittable={submittable}
         suggestions={suggestions}
         { ...requestItem }
       />
@@ -31,11 +27,11 @@ export default function RequestForm({updateRequest, request, updateRequestItem, 
   return (
     <div>
       <form onSubmit={handleSave}>
-        <FileDropzone onDrop={onDrop} submittable={!request.submittedAt}/>
+        <FileDropzone onDrop={onDrop} submittable={submittable}/>
         <div className={"form-group"} >
           <RequestName
-            submittable={!request.submittedAt}
-            request={request}
+            submittable={submittable}
+            request={data}
             updateRequest={updateRequest}
           />
         </div>
@@ -43,16 +39,16 @@ export default function RequestForm({updateRequest, request, updateRequestItem, 
         <Submit
           handleSubmit={handleSubmit}
           handleSave={handleSave}
-          submittable={!request.submittedAt}
+          submittable={submittable}
           dirty={dirty}
         />
-        <FileDropzone onDrop={onDrop} submittable={!request.submittedAt}/>
+        <FileDropzone onDrop={onDrop} submittable={submittable}/>
       </form>
     </div>
   );
 }
 
 Request.propTypes = {
-  request: PropTypes.object,
+  data: PropTypes.object,
 };
 

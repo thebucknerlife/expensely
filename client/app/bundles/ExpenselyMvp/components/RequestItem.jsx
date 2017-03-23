@@ -9,8 +9,8 @@ const RequestItem = ({index, update, submittable, ...props}) => {
 
   if (submittable) {
     fieldNodes = [
-      <BasicInput index={index} key='description' update={update} title='Description' name='description' val={props.description.val} error={props.description.error}/>,
-      <Dropdown   index={index} key='category'    update={update} title='Category'    name='category'     { ...props } />,
+      <BasicInput index={index} key='description' update={update} title='Description' name='description' data={props.description}/>,
+      <Dropdown   index={index} key='category'    update={update} title='Category'    name='category'    data={props.category} { ...props } />,
       <MoneyInput index={index} key='amount'      update={update} title='Amount'      name='amount'       { ...props } />,
       <DateInput  index={index} initialValue={props['paidAt']} update={update} name='paidAt' suggestions={props.suggestions.paidAt} />,
     ]
@@ -83,8 +83,8 @@ function MoneyInput({ name, title, type, update, index, ...props}) {
   );
 }
 
-function BasicInput({ name, title, type, update, index, val, error}) {
-  const wrapperClass = classnames('request-item__input-group', { 'has-error': error });
+function BasicInput({ name, title, type, update, index, data}) {
+  const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
   return (
     <div className={wrapperClass}>
       <label>{title}</label>
@@ -92,17 +92,18 @@ function BasicInput({ name, title, type, update, index, val, error}) {
         className={"request-item__input"}
         type={"text"}
         placeholder={title}
-        value={val}
+        value={data.val}
         onChange={(e) => {
-          update({ [name]: e.target.value }, index)
+          update({ [name]: { val: e.target.value } }, index)
         }}
       />
-      { error ? (<p className="text-danger">{ error }</p>) : null }
+      { data.error ? (<p className="text-danger">{ data.error }</p>) : null }
     </div>
   )
 }
 
-function Dropdown({ name, title, update, index, ...props}) {
+function Dropdown({ name, title, update, index, data, ...props}) {
+  const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
   let optionNodes = options().map(({ name, value }) => {
     return (
       <option value={value} key={value}>{name}</option>
@@ -110,18 +111,19 @@ function Dropdown({ name, title, update, index, ...props}) {
   })
 
   return (
-    <div className="request-item__input-group">
+    <div className={wrapperClass}>
       <label>{title}</label>
       <select
         className={"request-item__input"}
-        value={props[name]}
+        value={data.val}
         onChange={(e) => {
-          update({ [name]: e.target.value }, index)
+          update({ [name]: { val: e.target.value } }, index)
         }}
         required
       >
         { optionNodes }
       </select>
+      { data.error ? (<p className="text-danger">{ data.error }</p>) : null }
     </div>
   );
 }
