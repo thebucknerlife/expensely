@@ -12,7 +12,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
       <BasicInput index={index} key='description' update={update} title='Description' name='description' data={props.description}/>,
       <Dropdown   index={index} key='category'    update={update} title='Category'    name='category'    data={props.category} { ...props } />,
       <MoneyInput index={index} key='amount'      update={update} title='Amount'      name='amount'     data={props.amount} />,
-      <DateInput  index={index} initialValue={props['paidAt']} update={update} name='paidAt' suggestions={props.suggestions.paidAt} />,
+      <DateInput  index={index} update={update} name='paidAt' suggestions={props.suggestions.paidAt} data={props.paidAt} />,
     ]
   } else {
     fieldNodes = [
@@ -90,6 +90,7 @@ function MoneyInput({ name, title, type, update, index, data }) {
 
 function BasicInput({ name, title, type, update, index, data}) {
   const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
+
   return (
     <div className={wrapperClass}>
       <label>{title}</label>

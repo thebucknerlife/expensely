@@ -2,26 +2,29 @@ import React, { PropTypes } from "react";
 import { get, find, without } from "lodash";
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
+import classnames from 'classnames';
 //import 'react-datepicker-css';
 
 const railsFormat = 'YYYY-MM-DD';
 const displayFormat = "MM/DD/YY";
 
-export default function DateInput({ name, initialValue, update, index, suggestions }) {
-  let date = moment(initialValue, railsFormat);
+export default function DateInput({ name, update, index, suggestions, data }) {
+  let date = moment(data.val, railsFormat);
 
   if (!date.isValid()) {
     date = null;
   }
 
   const _update = function(momentVal) {
-    update({ [name]: momentVal.format(railsFormat) }, index)
+    update({ [name]: { val: momentVal.format(railsFormat) } }, index);
   }
 
-  const otherSuggestions = without(suggestions, initialValue);
+  console.log(suggestions, data.val);
+  const otherSuggestions = without(suggestions, data.val);
+  const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
 
   return (
-    <div className="request-item__input-group">
+    <div className={wrapperClass}>
       <label>Date</label>
       <DatePicker
         key={name}
@@ -30,7 +33,8 @@ export default function DateInput({ name, initialValue, update, index, suggestio
         selected={date}
         onChange={_update}
       />
-      <SuggestedDates suggestions={otherSuggestions} selfDate={date} _update={_update}/>
+      { data.error ? (<p className="text-danger">{ data.error }</p>) : null }
+      <SuggestedDates suggestions={otherSuggestions} selfDate={date} _update={_update} key='suggestions'/>
     </div>
   );
 }
