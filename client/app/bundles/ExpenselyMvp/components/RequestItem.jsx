@@ -11,7 +11,7 @@ const RequestItem = ({index, update, submittable, ...props}) => {
     fieldNodes = [
       <BasicInput index={index} key='description' update={update} title='Description' name='description' data={props.description}/>,
       <Dropdown   index={index} key='category'    update={update} title='Category'    name='category'    data={props.category} { ...props } />,
-      <MoneyInput index={index} key='amount'      update={update} title='Amount'      name='amount'       { ...props } />,
+      <MoneyInput index={index} key='amount'      update={update} title='Amount'      name='amount'     data={props.amount} />,
       <DateInput  index={index} initialValue={props['paidAt']} update={update} name='paidAt' suggestions={props.suggestions.paidAt} />,
     ]
   } else {
@@ -52,7 +52,10 @@ RequestItem.propTypes = {
     error: PropTypes.string,
   }),
   type: PropTypes.string,
-  amount: PropTypes.number,
+  amount: PropTypes.shape({
+    val: PropTypes.number,
+    error: PropTypes.string,
+  }),
   update: PropTypes.func.isRequired,
 };
 
@@ -64,21 +67,23 @@ RequestItem.defaultProps = {
 
 export default RequestItem;
 
-function MoneyInput({ name, title, type, update, index, ...props}) {
-  let value = props[name] / 100;
+function MoneyInput({ name, title, type, update, index, data }) {
+  let value = data.val / 100;
+  const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
 
   return (
-    <div className="request-item__input-group">
-    <label>{title}</label>
-    <input
-      className={"request-item__input"}
-      type={"number"}
-      placeholder={title}
-      value={value}
-      onChange={(e) => {
-        update({ [name]: (e.target.value * 100) }, index)
-      }}
-    />
+    <div className={wrapperClass}>
+      <label>{title}</label>
+      <input
+        className={"request-item__input"}
+        type={"number"}
+        placeholder={title}
+        value={value}
+        onChange={(e) => {
+          update({ [name]: { val: (e.target.value * 100) } }, index)
+        }}
+      />
+      { data.error ? (<p className="text-danger">{ data.error }</p>) : null }
     </div>
   );
 }

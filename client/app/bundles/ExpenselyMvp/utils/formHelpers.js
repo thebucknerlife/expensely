@@ -4,7 +4,7 @@ export function formDataFromRequest(requestAttrs) {
   let formAttrs = Object.assign({}, requestAttrs);
   const reqItemAttrs = requestAttrs.requestItems.map((item) => {
     return {
-      amount:       item.amount,
+      amount:       { val: item.amount },
       category:     { val: item.category },
       description:  { val: item.description },
       id:           item.id,
@@ -33,11 +33,11 @@ export function validateAndSetErrors(formData) {
       item.category.error = undefined;
     }
 
-    //if(!item.amount.val <= 0) {
-      //item.amount.error = 'Must be greater than 0';
-    //} else {
-      //item.amount.error = undefined;
-    //}
+    if(item.amount.val <= 0) {
+      item.amount.error = 'Must be greater than 0';
+    } else {
+      item.amount.error = undefined;
+    }
 
     //if(!item.category.val === 'none') {
       //item.category.error = 'Please select a category';
