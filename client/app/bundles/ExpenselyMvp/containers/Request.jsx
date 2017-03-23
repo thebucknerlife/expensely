@@ -4,6 +4,7 @@ import RequestForm from '../components/form/RequestForm';
 import FileDropzone from '../components/FileDropzone';
 import upload from '../utils/upload';
 import api from '../utils/api';
+import moment from 'moment';
 import { findIndex, reduce } from 'lodash';
 import { formDataFromRequest, validateAndSetErrors, hasErrors } from '../utils/formHelpers';
 const pdfPlaceholderUrl = require('assets/pdf_placeholder.svg');
@@ -25,7 +26,10 @@ export default class Request extends React.Component {
         receiptId = resp.data.id;
         this.newRequestItem({
           receiptId,
-          description: file.name,
+          description: { val: file.name },
+          amount: { val: 0 },
+          paidAt: { val: moment().format('YYYY-MM-DD') },
+          category: { val: 'none' },
           preview: file.type == 'application/pdf' ? ('/assets' + pdfPlaceholderUrl) : file.preview,
         })
         upload(file, resp.data).then((resp) => {
