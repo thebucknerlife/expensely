@@ -6,7 +6,7 @@ import upload from '../utils/upload';
 import api from '../utils/api';
 import moment from 'moment';
 import { findIndex, reduce } from 'lodash';
-import { formDataFromRequest, validateAndSetErrors, hasErrors } from '../utils/formHelpers';
+import { formDataFromRequest, validateAndSetErrors, hasErrors, requestFromFormData } from '../utils/formHelpers';
 const pdfPlaceholderUrl = require('assets/pdf_placeholder.svg');
 
 export default class Request extends React.Component {
@@ -65,7 +65,7 @@ export default class Request extends React.Component {
   apiUpdate = (attrs) => {
     api.requests.update(attrs, this.state.token)
       .then((response) => {
-        Object.assign(this.state.formData, response.data)
+        Object.assign(this.state.formData, formDataFromRequest(response.data));
         this.state.formDirty = false;
         this.setState(this.state);
       });
@@ -73,21 +73,29 @@ export default class Request extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let newAttrs = Object.assign(this.state.formData, { submittedAt: new Date().toISOString() });
-    this.apiUpdate(newAttrs);
+
+    const newFormData = validateAndSetErrors(this.state.formData)
+    this.state.formData = newFormData;
+    this.setState(this.state);
+
+    if (!hasErrors(newFormData)) {
+      const request = requestFromFormData(this.state.formData);
+      let submittedRequest = Object.assign(request, { submittedAt: new Date().toISOString() });
+      this.apiUpdate(submittedRequest);
+    };
   }
 
   handleSave = (e) => {
     e.preventDefault();
 
     const newFormData = validateAndSetErrors(this.state.formData)
-    console.log('newFormData', newFormData);
-    console.log('errors?', hasErrors(newFormData));
-
     this.state.formData = newFormData;
-
     this.setState(this.state);
-    //this.apiUpdate(this.state.formData);
+
+    if (!hasErrors(newFormData)) {
+      const request = requestFromFormData(this.state.formData);
+      this.apiUpdate(request);
+    };
   }
 
   render() {

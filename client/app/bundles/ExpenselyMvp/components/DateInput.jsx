@@ -19,7 +19,6 @@ export default function DateInput({ name, update, index, suggestions, data }) {
     update({ [name]: { val: momentVal.format(railsFormat) } }, index);
   }
 
-  console.log(suggestions, data.val);
   const otherSuggestions = without(suggestions, data.val);
   const wrapperClass = classnames('request-item__input-group', { 'has-error': data.error });
 

@@ -12,7 +12,6 @@ export function formDataFromRequest(requestAttrs) {
       receiptId:    item.receiptId,
       receipt:      item.receipt,
       _destroy:     item._destroy,
-      _destroy:     item._destroy,
     }
   });
   formAttrs.requestItems = reqItemAttrs;
@@ -58,4 +57,24 @@ export function hasErrors(formData) {
         return bool || false;
       }
     }, false);
+}
+
+export function requestFromFormData(attrs) {
+  console.log('requestFromFormData', attrs);
+  let request = Object.assign({}, attrs);
+  const requestItems = attrs.requestItems.map((item) => {
+    return {
+      amount:       item.amount.val,
+      category:     item.category.val,
+      description:  item.description.val,
+      paidAt:       item.paidAt.val,
+      id:           item.id,
+      receiptId:    item.receiptId,
+      receipt:      item.receipt,
+      _destroy:     item._destroy,
+    }
+  });
+  request.requestItems = requestItems;
+  console.log('requestFromFormData request:', request);
+  return request;
 }
