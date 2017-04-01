@@ -47,3 +47,11 @@ $margin-left: 40px;
 .request-item__li {
   list-style-type: none;
 }
+
+.request_item__submitted-field {
+  margin: 10px 0;
+
+  label {
+    margin: 0;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { PropTypes } from "react";
 import classnames from 'classnames';
-import { get, find } from "lodash";
+import moment from 'moment';
+import { get, find, capitalize } from "lodash";
 import Image from './Image';
 import DateInput from './DateInput';
 
@@ -16,10 +17,10 @@ const RequestItem = ({index, update, submittable, ...props}) => {
     ]
   } else {
     fieldNodes = [
-      <p>{props['description']}</p>,
-      <p>{props['category']}</p>,
-      <p>{props['amount']}</p>,
-      <p>{props['paidAt']}</p>,
+      <SubmittedField data={props.description} title='Description'/>,
+      <SubmittedField data={props.category} title='Category' type='category'/>,
+      <SubmittedField data={props.amount} title='Amount' type='money'/>,
+      <SubmittedField data={props.paidAt} title='Date' type='date'/>,
     ]
   }
 
@@ -33,9 +34,11 @@ const RequestItem = ({index, update, submittable, ...props}) => {
         />
       </div>
       <div className={"request-item__inputs-container"}>
-        <div className={"request-item__delete"}>
-          <span className={"delete-icon"} onClick={() => { props.delete(index) }}>&#10006;</span>
-        </div>
+        { submittable &&
+          <div className={"request-item__delete"}>
+            <span className={"delete-icon"} onClick={() => { props.delete(index) }}>&#10006;</span>
+          </div>
+        }
         <ul className={"request-item__inputs"}>
           {
             fieldNodes.map((node, i) => (<li className={"request-item__li"} key={i}>{ node }</li>))
@@ -132,6 +135,31 @@ function Dropdown({ name, title, update, index, data, ...props}) {
       { data.error ? (<p className="text-danger">{ data.error }</p>) : null }
     </div>
   );
+}
+
+function SubmittedField({title, data, type}) {
+  let displayValue;
+
+  switch(type) {
+    case 'date':
+      const date = moment(data.val, 'YYYY-MM-DD');
+      displayValue = date.format("MM/DD/YY")
+      break;
+    case 'money':
+      displayValue = '$' + (data.val / 100).toFixed(2);
+      break;
+    case 'category':
+      displayValue = capitalize(data.val);
+      break;
+    default:
+      displayValue = data.val;
+  }
+  return(
+    <div className="request_item__submitted-field">
+      <label>{ title }</label>
+      <div>{ displayValue }</div>
+    </div>
+  )
 }
 
 function options() {
