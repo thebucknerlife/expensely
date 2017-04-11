@@ -1,6 +1,6 @@
 @import "bootstrap";
 
-.break {
+.request:not(:first-child) {
   page-break-before: always;
 }
 

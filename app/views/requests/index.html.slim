@@ -1,27 +1,28 @@
-- @decorated.each do |user|
-  div.break
-    h3 = user.name
-    table.table
-      thead
-        tr.dark
-          th.table__description Description
-          th.table__date Date
-          th.table__filename Filename
-          th.table__amount Amount
-      - user.categories.each do |category|
+div.requests
+  - @decorated.each do |user|
+    div.request
+      h3 = user.name
+      table.table
+        thead
+          tr.dark
+            th.table__description Description
+            th.table__date Date
+            th.table__filename Filename
+            th.table__amount Amount
+        - user.categories.each do |category|
+          tbody
+            tr
+              td.table__sub-header colspan=4 = category.name.titleize
+            - category.request_items.each do |ri|
+              tr
+                td = ri.description
+                td = ri.paid_at.try(:strftime, '%b %d, %Y')
+                td = ri.receipt.filename
+                td = number_to_currency(ri.amount/100.0)
+            tr
+              td(colspan=3): strong = "Subtotal"
+              td: strong = number_to_currency(category.sum/100.0)
         tbody
           tr
-            td.table__sub-header colspan=4 = category.name.titleize
-          - category.request_items.each do |ri|
-            tr
-              td = ri.description
-              td = ri.paid_at.try(:strftime, '%b %d, %Y')
-              td = ri.receipt.filename
-              td = number_to_currency(ri.amount/100.0)
-          tr
-            td(colspan=3): strong = "Subtotal"
-            td: strong = number_to_currency(category.sum/100.0)
-      tbody
-        tr
-          td(colspan=3): strong: em Total
-          td: strong: em = number_to_currency(user.sum/100.0)
+            td(colspan=3): strong: em Total
+            td: strong: em = number_to_currency(user.sum/100.0)
