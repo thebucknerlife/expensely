@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+.break {
+  page-break-before: always;
+}
+
 th {
   background-color: black;
   color: white;
