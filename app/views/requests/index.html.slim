@@ -2,6 +2,7 @@ div.requests
   - @decorated.each do |user|
     div.request
       h3 = user.name
+      p.text-muted = user.email
       table.table
         thead
           tr.dark

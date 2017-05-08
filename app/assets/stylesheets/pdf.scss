@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+h3 {
+  margin-bottom: 0;
+}
+
 .request:not(:first-child) {
   page-break-before: always;
 }
