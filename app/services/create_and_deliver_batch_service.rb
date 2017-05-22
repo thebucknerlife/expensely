@@ -1,67 +1,49 @@
 class CreateAndDeliverBatchService
 
-  # TODO: update this file to use new Zip service
-  def initialize(uploader: Cloudinary::Uploader, pdf_generator: RequestsPdfGenerator.new, mailer: BatchMailer)
+  def initialize(
+    pdf_creator: RequestsPdfCreatorService.new,
+    zip_creator: ZipCreatorService.new,
+    uploader: PDFUploadService.new,
+    mailer: BatchMailer
+  )
+    @pdf_creator = pdf_creator
+    @zip_creator = zip_creator
     @uploader = uploader
-    @pdf_generator = pdf_generator
     @mailer = mailer
   end
 
-  def run(team:, requests:)
-    batch = Batch.new(team: team, requests: requests)
-    return deliver_no_requests_email(team) unless batch.requests.any?
+  def run(team:)
+    batch = Batch.new(team: team)
 
-    zip_url = create_zip(batch)
-    pdf = create_pdf_file(batch)
-    pdf_url = upload_and_record_pdf(pdf, batch)
-    deliver_batch_email(zip_url, pdf_url, batch)
-    batch.requests.update_all(delivered_at: Time.now)
-    batch.save
+    uploads = team.users.map do |user|
+      requests = user.requests.submitted.undelivered
+      next unless requests.any?
+      rails_path  = pdf_creator.create_and_save(requests)
+      upload(rails_path, user)
+    end
+
+    public_ids = upload.compact.map(&:public_id)
+    zip = zip_creator.create_and_save(public_ids: public_ids, team: team, batch: batch)
+
+    #deliver_batch_email(zip_url, pdf_url, batch)
+
+    #batch.requests.update_all(delivered_at: Time.now)
+    #batch.save
+    #return deliver_no_requests_email(team) unless batch.requests.any?
   end
 
   private
 
-  attr_reader :uploader, :pdf_generator, :mailer
+  attr_reader :mailer, :uploader, :pdf_creator
 
-  def create_zip(batch)
-    response = uploader.create_zip(zip_args(batch))
-    response['secure_url']
+  def upload(rails_path, user)
+    uploader.upload(
+      rails_path: rails_path,
+      user: user,
+      team: user.team
+    )
   end
 
-  def create_pdf_file(batch)
-    File.open(pdf_save_path, 'wb') do |f|
-      f << pdf_generator.generate(batch.requests)
-    end
-  end
-
-  def upload_and_record_pdf(pdf, batch)
-    response = uploader.upload(File.open(pdf_save_path), pdf_args)
-    batch.update(cloudinary_json: response)
-    response['secure_url']
-  end
-
-  def zip_args(batch)
-    receipt_image_ids = batch.requests.flat_map {|r| r.request_items.map{|ri| ri.receipt.cloudinary_json['public_id']}}
-    {
-      public_ids: receipt_image_ids,
-      transformations: ['/w_1000,h_1000,c_limit'],
-      target_public_id: 'test',
-      tags: ['batch-zip']
-    }
-  end
-
-  def pdf_args
-    {
-      cloud_name: ENV['CLOUDINARY_CLOUD_NAME'],
-      api_key: ENV['CLOUDINARY_API_KEY'],
-      api_secret: ENV['CLOUDINARY_API_SECRET'],
-      tags: ['batch-pdf'],
-    }
-  end
-
-  def pdf_save_path
-    @path ||= Rails.root.join('public', "#{Time.now.to_i}.pdf")
-  end
 
   def deliver_batch_email(zip_url, pdf_url, batch)
     mailer.requests_batch_email(zip_url, pdf_url, batch).deliver_now

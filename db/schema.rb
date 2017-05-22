@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316081931) do
+ActiveRecord::Schema.define(version: 20170522144909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,32 @@ ActiveRecord::Schema.define(version: 20170316081931) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.json     "cloudinary_json"
+  end
+
+  create_table "cloudinary_uploads", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "user_id"
+    t.integer  "receipt_id"
+    t.integer  "batch_id"
+    t.string   "public_id"
+    t.string   "signature"
+    t.integer  "version"
+    t.string   "width"
+    t.string   "height"
+    t.string   "format"
+    t.string   "resource_type"
+    t.datetime "cloudinary_created_at"
+    t.string   "tags",                               array: true
+    t.integer  "bytes"
+    t.string   "cloudinary_type"
+    t.string   "etag"
+    t.string   "url"
+    t.string   "secure_url"
+    t.string   "original_filename"
+    t.integer  "resource_count"
+    t.integer  "file_count"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "receipts", force: :cascade do |t|

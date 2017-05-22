@@ -1,4 +1,4 @@
-class CreateAndDeliverBatchService
+class DistributeUsersBatchService
 
   def initialize(uploader: Cloudinary::Uploader, pdf_generator: RequestsPdfGenerator.new, mailer: BatchMailer)
     @uploader = uploader
