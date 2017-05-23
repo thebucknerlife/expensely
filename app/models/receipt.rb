@@ -34,7 +34,7 @@ class Receipt < ApplicationRecord
   def accountant_url
     @accountant_url ||= begin
       insert_pos = url.index(/\/upload/)+7
-      url.insert(insert_pos, '/w_1000,h_1000,c_limit')
+      url.insert(insert_pos, '/w_500,h_500,c_limit')
     end
   end
 

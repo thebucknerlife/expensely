@@ -8,22 +8,29 @@ div.requests
           tr.dark
             th.table__description Description
             th.table__date Date
-            th.table__filename Filename
             th.table__amount Amount
         - user.categories.each do |category|
           tbody
             tr
-              td.table__sub-header colspan=4 = category.name.titleize
+              td.table__sub-header colspan=3 = category.name.titleize
             - category.request_items.each do |ri|
               tr
                 td = ri.description
-                td = ri.paid_at.try(:strftime, '%b %d, %Y')
-                td = ri.receipt.filename
-                td = number_to_currency(ri.amount/100.0)
+                td = ri.date
+                td = ri.dollar_amount
             tr
-              td(colspan=3): strong = "Subtotal"
-              td: strong = number_to_currency(category.sum/100.0)
+              td(colspan=2): strong = "Subtotal"
+              td: strong = category.subtotal
         tbody
           tr
-            td(colspan=3): strong: em Total
+            td(colspan=2): strong: em Total
             td: strong: em = number_to_currency(user.sum/100.0)
+      div.receipts-section
+        h4.header__receipts Receipts
+        div.receipts
+          - user.categories.each do |category|
+              div.category-name = category.name.titleize
+              - category.request_items.each do |ri|
+                div.receipt
+                  p = ri.description
+                  img src=ri.receipt.url

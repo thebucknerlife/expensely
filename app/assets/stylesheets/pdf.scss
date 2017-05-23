@@ -34,3 +34,33 @@ th {
   background-color: gray;
   color: white;
 }
+
+.receipts-section {
+  page-break-before: always;
+}
+
+.category-name {
+  width: 100%;
+  padding: 10px;
+  background-color: gray;
+  color: white;
+}
+
+.category-name:not(:first-child) {
+  page-break-before: always;
+}
+
+.receipt {
+  padding: 20px;
+  width: 100%;
+  border-bottom: 2px solid gray;
+
+  p {
+    margin: 2px 0;
+  }
+
+  img {
+    width: 250px;
+    height: 250px;
+  }
+}

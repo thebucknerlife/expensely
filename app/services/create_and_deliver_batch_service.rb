@@ -28,7 +28,7 @@ class CreateAndDeliverBatchService
 
     deliver_batch_email(zip.secure_url, batch)
 
-    batch.requests.update_all(delivered_at: Time.now)
+    #batch.requests.update_all(delivered_at: Time.now)
     batch.save
   end
 

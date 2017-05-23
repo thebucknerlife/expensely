@@ -51,7 +51,7 @@ class RequestsController < ApplicationController
   end
 
   def decorate_requests
-    @decorated = RequestsByUserDecorator.decorate(Request.includes(:user, :request_items).all)
+    @decorated = RequestsDecorator.decorate(Request.includes(:user, :request_items).all)
   end
 
   def json_format
