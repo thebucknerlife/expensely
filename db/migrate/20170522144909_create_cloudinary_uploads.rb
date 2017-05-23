@@ -12,6 +12,8 @@ class CreateCloudinaryUploads < ActiveRecord::Migration[5.0]
       t.string :height
       t.string :format
       t.string :resource_type
+      t.string :etag
+      t.string :pages
       t.datetime :cloudinary_created_at
       t.string :tags, array: true
       t.integer :bytes

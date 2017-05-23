@@ -44,11 +44,12 @@ ActiveRecord::Schema.define(version: 20170522144909) do
     t.string   "height"
     t.string   "format"
     t.string   "resource_type"
+    t.string   "etag"
+    t.string   "pages"
     t.datetime "cloudinary_created_at"
     t.string   "tags",                               array: true
     t.integer  "bytes"
     t.string   "cloudinary_type"
-    t.string   "etag"
     t.string   "url"
     t.string   "secure_url"
     t.string   "original_filename"

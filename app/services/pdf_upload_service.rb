@@ -19,9 +19,8 @@ class PDFUploadService
 
   def create(response, team, user, batch)
     attrs = rename_cloudinary_reserved_keys(response)
+    attrs.delete('context')
     attrs.merge!(team: team, user: user, batch: batch)
-    # TODO: handle extra attributes (like "pages")
-    byebug
     CloudinaryUpload.create!(attrs)
   end
 

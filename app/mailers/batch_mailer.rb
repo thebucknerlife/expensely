@@ -1,6 +1,6 @@
 class BatchMailer < ApplicationMailer
-  def requests_batch_email(zip_url, pdf_url, batch)
-    @zip_url, @pdf_url = zip_url, pdf_url
+  def requests_batch_email(zip_url, batch)
+    @zip_url = zip_url
     mail(to: batch.team.email, subject: 'Reimbursements Batch')
   end
 
