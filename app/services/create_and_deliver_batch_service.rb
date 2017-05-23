@@ -30,7 +30,6 @@ class CreateAndDeliverBatchService
 
     batch.requests.update_all(delivered_at: Time.now)
     batch.save
-    #return deliver_no_requests_email(team) unless batch.requests.any?
   end
 
   private
@@ -45,8 +44,4 @@ class CreateAndDeliverBatchService
   def deliver_batch_email(zip_url, batch)
     mailer.requests_batch_email(zip_url, batch).deliver_now
   end
-
-  #def deliver_no_requests_email(team)
-    #mailer.no_requests_email(team).deliver_now
-  #end
 end
