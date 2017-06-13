@@ -14,7 +14,7 @@ module Expensely
           "* hi -> create a new reimbursement request or return your existing request url",
           "* review -> list your existing reimbursement requests",
           "\n",
-          "Still have questions? Write us at expensely@thirtytoship.io or visit us at expensely.thirtytoship.io"
+          "Still have questions? Write us at expensely@thirtytoship.io or visit us at #expenselyfeedback"
         ].join("\n")
       end
     end
