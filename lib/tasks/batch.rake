@@ -4,7 +4,7 @@ namespace :batch do
     Team.all.each do |team|
       log("Sending batch for Team #{team.id} (#{team.team_name})...")
       requests = team.requests.submitted.undelivered.includes(:user, request_items: :receipt)
-      CreateAndDeliverBatchService.new.run(team: team, requests: requests)
+      CreateAndDeliverBatchService.new.run(team: team)
       log("...done for request ids #{requests.ids}.")
     end
   end
