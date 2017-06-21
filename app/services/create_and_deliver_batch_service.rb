@@ -24,11 +24,15 @@ class CreateAndDeliverBatchService
     end
 
     public_ids = uploads.compact.map(&:public_id)
-    zip = zip_creator.create_and_save(public_ids: public_ids, team: team, batch: batch)
 
-    deliver_batch_email(zip.secure_url, batch)
+    if public_id.any?
+      zip = zip_creator.create_and_save(public_ids: public_ids, team: team, batch: batch)
+      deliver_batch_email(zip.secure_url, batch)
+      batch.requests.update_all(delivered_at: Time.now)
+    else
+      deliver_no_requests_email(team)
+    end
 
-    #batch.requests.update_all(delivered_at: Time.now)
     batch.save
   end
 
@@ -40,8 +44,11 @@ class CreateAndDeliverBatchService
     uploader.upload(rails_path: rails_path, user: user, team: user.team)
   end
 
-
   def deliver_batch_email(zip_url, batch)
     mailer.requests_batch_email(zip_url, batch).deliver_now
+  end
+
+  def deliver_no_requests_email(team)
+    mailer.no_requests_email(team).deliver_now
   end
 end
