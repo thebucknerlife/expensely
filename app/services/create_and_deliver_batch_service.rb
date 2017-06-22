@@ -25,7 +25,7 @@ class CreateAndDeliverBatchService
 
     public_ids = uploads.compact.map(&:public_id)
 
-    if public_id.any?
+    if public_ids.any?
       zip = zip_creator.create_and_save(public_ids: public_ids, team: team, batch: batch)
       deliver_batch_email(zip.secure_url, batch)
       batch.requests.update_all(delivered_at: Time.now)
