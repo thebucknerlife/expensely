@@ -38,11 +38,6 @@ export function validateAndSetErrors(formData) {
       item.amount.error = undefined;
     }
 
-    //if(!item.category.val === 'none') {
-      //item.category.error = 'Please select a category';
-    //} else {
-      //item.category.error = undefined;
-    //}
     return item;
   })
 
@@ -51,6 +46,8 @@ export function validateAndSetErrors(formData) {
 
 export function hasErrors(formData) {
     return reduce(formData.requestItems, (bool, item) => {
+      if(item._destroy) { return bool || false };
+
       if(item.description.error || item.category.error || item.amount.error || item.paidAt.error) {
         return bool || true;
       } else {
@@ -60,7 +57,6 @@ export function hasErrors(formData) {
 }
 
 export function requestFromFormData(attrs) {
-  console.log('requestFromFormData', attrs);
   let request = Object.assign({}, attrs);
   const requestItems = attrs.requestItems.map((item) => {
     return {
@@ -75,6 +71,5 @@ export function requestFromFormData(attrs) {
     }
   });
   request.requestItems = requestItems;
-  console.log('requestFromFormData request:', request);
   return request;
 }
