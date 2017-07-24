@@ -11,7 +11,7 @@ namespace :batch do
 
   task create_and_deliver_monday: :environment do
     los_angeles_day_of_week = Time.now.in_time_zone('America/Los_Angeles').wday
-    if los_angeles_day_of_week == 2 # Monday
+    if los_angeles_day_of_week == 1 # Monday
       log("Sending batches on Monday...")
       Rake::Task['batch:create_and_deliver_now'].invoke
       log("...done sending Monday batches.")
