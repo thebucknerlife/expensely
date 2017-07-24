@@ -26,7 +26,7 @@ export default class Request extends React.Component {
         receiptId = resp.data.id;
         this.newRequestItem({
           receiptId,
-          description: { val: file.name },
+          description: { val: '' },
           amount: { val: 0 },
           paidAt: { val: moment().format('YYYY-MM-DD') },
           category: { val: 'none' },
