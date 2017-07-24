@@ -27,6 +27,7 @@ export default function RequestForm({updateRequest, data, updateRequestItem, del
   return (
     <div>
       <form onSubmit={handleSave}>
+        <p><strong>Important Note: A bank/credit card statement is not an acceptable record for reimbursement unless the receipt has been lost. Please do not submit bank/credit card statements unless absolutely necessary.</strong></p>
         <FileDropzone onDrop={onDrop} submittable={submittable}/>
         <div className={"form-group"} >
           <RequestName
