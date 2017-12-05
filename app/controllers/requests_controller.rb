@@ -1,7 +1,7 @@
 require("#{Rails.root}/bots/expensely/utils/bot_client")
 
 class RequestsController < ApplicationController
-  http_basic_authenticate_with name: "expensely", password: "nicoleisthebest525", only: [:index, :download]
+  http_basic_authenticate_with name: ENV["HTTP_AUTH_NAME"], password: ENV['HTTP_AUTH_PASSWORD'], only: [:index, :download]
 
   before_action :get_request, only: [:show, :update]
   before_action :verify_token, only: [:show, :update]
